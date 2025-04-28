@@ -69,9 +69,6 @@ impl App {
                 .await?,
         );
 
-        // Apply migrations
-        sqlx::migrate!().run(&*db_pool.clone()).await?;
-
         Ok(Self {
             database_url,
             server_address,
@@ -181,12 +178,12 @@ impl App {
             .route_layer(axum::middleware::from_fn_with_state(app_state.clone(), middleware::global::check_organizer))
             .route(
                 "/partials/base/main/attendance/attendance-log",
-                get(handlers::partials::base::main::attendance::attendance_log::get::attendance_log).patch(handlers::partials::base::main::attendance::attendance_log::patch::attendance_log)
+                get(handlers::partials::base::main::attendance::attendance_log::get::attendance_log).patch(handlers::partials::base::main::attendance::attendance_log::patch::attendance_log),
             )
             .route(
                 "/attendance",
                 get(handlers::app::attendance::get::attendance),
-            )   
+            )
             .route(
                 "/partials/base/main/attendance/attendance-job-options",
                 get(
@@ -203,7 +200,7 @@ impl App {
             .route("/event-manager-relation", post(handlers::app::event_manager_relation::post::event_manager_relation).delete(handlers::app::event_manager_relation::delete::event_manager_relation))
             .route("/settings/details", get(handlers::app::settings::details::get::details).patch(handlers::app::settings::details::patch::details))
             .route("/settings/password", get(handlers::app::settings::password::get::password).patch(handlers::app::settings::password::patch::password))
-            
+
             .route("/logout", get(handlers::app::auth::get::logout))
             .route_layer(login_required!(Backend, login_url = "/login"))
             .route("/", get(handlers::app::index::get::index))
