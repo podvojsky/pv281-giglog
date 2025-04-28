@@ -34,6 +34,7 @@ jobs:
       - name: Build and push container image to registry
         uses: azure/container-apps-deploy-action@v2
         with:
+          environmentVariables: DATABASE_URL=${{ secrets.HOMEWORK2WEBAPP_DATABASE_URL }}
           appSourcePath: ${{ github.workspace }}
           _dockerfilePathKey_: _dockerfilePath_
           registryUrl: homework2cr.azurecr.io
