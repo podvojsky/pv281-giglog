@@ -46,7 +46,7 @@ jobs:
           _buildArgumentsKey_: |
             _buildArgumentsValues_
           buildArguments: |
-            "DATABASE_URL=secretref:database-url" "SERVER_ADDRESS=0.0.0.0:3000"
+            "DATABASE_URL=${{ secrets.HOMEWORK2WEBAPP_DATABASE_URL }}" "SERVER_ADDRESS=0.0.0.0:3000"
 
 
 
