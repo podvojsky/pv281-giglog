@@ -48,7 +48,7 @@
         <td>{{ job.salary_taxed }} CZK</td>
         <td>
             {% if job.rating == 0 %}
-                <img src="public/svg/no_rating.svg" alt="No Rating" width="90" height="30">
+                <img src="https://homework2storage.blob.core.windows.net/blob/public/svg/no_rating.svg" alt="No Rating" width="90" height="30">
             {% else %}
                 {% call rating_stars::rating_stars(job.rating) %}
             {% endif %}

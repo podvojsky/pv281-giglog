@@ -3,7 +3,7 @@
 @tailwind utilities;
 @font-face {
     font-family: metal-mania;
-    src: url('./fonts/MetalMania-Regular.ttf');
+    src: url('https://homework2storage.blob.core.windows.net/blob/public/fonts/MetalMania-Regular.ttf');
 }
 
 h1 {
