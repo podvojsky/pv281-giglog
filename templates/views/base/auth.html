@@ -2,24 +2,24 @@
 {% import "partials/title.html" as title %}
 
 {% block content %}
-    <section class="flex h-[100dvh] items-center justify-center bg-base-200">
-        <div
-            class="grid w-full max-w-[900px] grid-cols-[1.5fr_2fr] grid-rows-[600px] rounded-2xl bg-base-100 shadow-xl"
-        >
-            <img
-                id="login-img"
-                src="https://ucarecdn.com/6ba9b5ac-049f-4925-b2c4-0c13360841a2/-/preview/1000x666/"
-                alt="login"
-                class="h-full rounded-bl-2xl rounded-tl-2xl object-cover"
-                hx-preserve
-            />
-            <div class="flex w-full flex-grow flex-col items-center rounded-br-2xl rounded-tr-2xl p-4">
-                <h1 class="my-4 font-[metal-mania] text-5xl uppercase">GIGLOG</h1>
-                <div class="flex h-full w-full items-center justify-center overflow-auto">
-                    {% block form %}
-                    {% endblock form %}
-                </div>
+<section class="flex h-[100dvh] items-center justify-center bg-base-200">
+    <div
+        class="grid w-full max-w-[900px] grid-cols-[1.5fr_2fr] grid-rows-[600px] rounded-2xl bg-base-100 shadow-xl"
+    >
+        <img
+            alt="login"
+            class="h-full rounded-bl-2xl rounded-tl-2xl object-cover"
+            hx-preserve
+            id="login-img"
+            src="https://homework2storage.blob.core.windows.net/blob/public/pictures/login_concert.jpg"
+        />
+        <div class="flex w-full flex-grow flex-col items-center rounded-br-2xl rounded-tr-2xl p-4">
+            <h1 class="my-4 font-[metal-mania] text-5xl uppercase">GIGLOG</h1>
+            <div class="flex h-full w-full items-center justify-center overflow-auto">
+                {% block form %}
+                {% endblock form %}
             </div>
         </div>
-    </section>
+    </div>
+</section>
 {% endblock content %}

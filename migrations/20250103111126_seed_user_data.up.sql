@@ -1,19 +1,16 @@
-INSERT INTO "user" (
-        "id",
-        "first_name",
-        "last_name",
-        "gender",
-        "birth_date",
-        "username",
-        "email",
-        "phone",
-        "role",
-        "tax_rate",
-        "password_hash",
-        "avatar_url"
-    )
-VALUES (
-        1,
+INSERT INTO "user" ("id",
+                    "first_name",
+                    "last_name",
+                    "gender",
+                    "birth_date",
+                    "username",
+                    "email",
+                    "phone",
+                    "role",
+                    "tax_rate",
+                    "password_hash",
+                    "avatar_url")
+VALUES (1,
         'Dexter',
         'Morgan',
         'male',
@@ -24,10 +21,8 @@ VALUES (
         'admin',
         0.15,
         '$argon2d$v=19$m=12,t=3,p=1$bHk2dTlzN3JjZDAwMDAwMA$rxf8jHFU0HO6+EA5F3qGYQ',
-        '/public/pictures/user_avatar_img/user_00016.jpg'
-    ),
-    (
-        2,
+        'https://homework2storage.blob.core.windows.net/blob/public/pictures/user_avatar_img/user_00016.jpg'),
+       (2,
         'Josef',
         'Buba',
         'male',
@@ -38,10 +33,8 @@ VALUES (
         'admin',
         0.15,
         '$argon2d$v=19$m=12,t=3,p=1$bHk2dTlzN3JjZDAwMDAwMA$rxf8jHFU0HO6+EA5F3qGYQ',
-        '/public/pictures/user_avatar_img/user_00017.jpg'
-    ),
-    (
-        3,
+        'https://homework2storage.blob.core.windows.net/blob/public/pictures/user_avatar_img/user_00017.jpg'),
+       (3,
         'Radek',
         'Srejch',
         'male',
@@ -52,10 +45,8 @@ VALUES (
         'admin',
         0.15,
         '$argon2d$v=19$m=12,t=3,p=1$bHk2dTlzN3JjZDAwMDAwMA$rxf8jHFU0HO6+EA5F3qGYQ',
-        '/public/pictures/user_avatar_img/user_00018.jpg'
-    ),
-    (
-        4,
+        'https://homework2storage.blob.core.windows.net/blob/public/pictures/user_avatar_img/user_00018.jpg'),
+       (4,
         'Lukáš',
         'Nadvojský',
         'male',
@@ -66,10 +57,8 @@ VALUES (
         'admin',
         0.15,
         '$argon2d$v=19$m=12,t=3,p=1$bHk2dTlzN3JjZDAwMDAwMA$rxf8jHFU0HO6+EA5F3qGYQ',
-        '/public/pictures/user_avatar_img/user_00019.jpg'
-    ),
-    (
-        5,
+        'https://homework2storage.blob.core.windows.net/blob/public/pictures/user_avatar_img/user_00019.jpg'),
+       (5,
         'Michal',
         'Uherácký',
         'male',
@@ -80,10 +69,8 @@ VALUES (
         'admin',
         0.15,
         '$argon2d$v=19$m=12,t=3,p=1$bHk2dTlzN3JjZDAwMDAwMA$rxf8jHFU0HO6+EA5F3qGYQ',
-        '/public/pictures/user_avatar_img/user_00020.jpg'
-    ),
-    (
-        6,
+        'https://homework2storage.blob.core.windows.net/blob/public/pictures/user_avatar_img/user_00020.jpg'),
+       (6,
         'Ema',
         'Nováková',
         'female',
@@ -94,10 +81,8 @@ VALUES (
         'organizer',
         0.15,
         '$argon2d$v=19$m=12,t=3,p=1$bHk2dTlzN3JjZDAwMDAwMA$rxf8jHFU0HO6+EA5F3qGYQ',
-        '/public/pictures/user_avatar_img/user_00001.jpg'
-    ),
-    (
-        7,
+        'https://homework2storage.blob.core.windows.net/blob/public/pictures/user_avatar_img/user_00001.jpg'),
+       (7,
         'Tomáš',
         'Král',
         'male',
@@ -108,10 +93,8 @@ VALUES (
         'organizer',
         0.15,
         '$argon2d$v=19$m=12,t=3,p=1$bHk2dTlzN3JjZDAwMDAwMA$rxf8jHFU0HO6+EA5F3qGYQ',
-        '/public/pictures/user_avatar_img/user_00021.jpg'
-    ),
-    (
-        8,
+        'https://homework2storage.blob.core.windows.net/blob/public/pictures/user_avatar_img/user_00021.jpg'),
+       (8,
         'Karolína',
         'Horská',
         'female',
@@ -122,10 +105,8 @@ VALUES (
         'organizer',
         0.15,
         '$argon2d$v=19$m=12,t=3,p=1$bHk2dTlzN3JjZDAwMDAwMA$rxf8jHFU0HO6+EA5F3qGYQ',
-        '/public/pictures/user_avatar_img/user_00002.jpg'
-    ),
-    (
-        9,
+        'https://homework2storage.blob.core.windows.net/blob/public/pictures/user_avatar_img/user_00002.jpg'),
+       (9,
         'Adam',
         'Růžička',
         'male',
@@ -136,10 +117,8 @@ VALUES (
         'organizer',
         0.15,
         '$argon2d$v=19$m=12,t=3,p=1$bHk2dTlzN3JjZDAwMDAwMA$rxf8jHFU0HO6+EA5F3qGYQ',
-        '/public/pictures/user_avatar_img/user_00022.jpg'
-    ),
-    (
-        10,
+        'https://homework2storage.blob.core.windows.net/blob/public/pictures/user_avatar_img/user_00022.jpg'),
+       (10,
         'Barbora',
         'Černá',
         'female',
@@ -150,10 +129,8 @@ VALUES (
         'organizer',
         0.15,
         '$argon2d$v=19$m=12,t=3,p=1$bHk2dTlzN3JjZDAwMDAwMA$rxf8jHFU0HO6+EA5F3qGYQ',
-        '/public/pictures/user_avatar_img/user_00003.jpg'
-    ),
-    (
-        11,
+        'https://homework2storage.blob.core.windows.net/blob/public/pictures/user_avatar_img/user_00003.jpg'),
+       (11,
         'Filip',
         'Dvořák',
         'other',
@@ -164,10 +141,8 @@ VALUES (
         'organizer',
         0.15,
         '$argon2d$v=19$m=12,t=3,p=1$bHk2dTlzN3JjZDAwMDAwMA$rxf8jHFU0HO6+EA5F3qGYQ',
-        '/public/pictures/user_avatar_img/user_00023.jpg'
-    ),
-    (
-        12,
+        'https://homework2storage.blob.core.windows.net/blob/public/pictures/user_avatar_img/user_00023.jpg'),
+       (12,
         'Petra',
         'Malá',
         'female',
@@ -178,10 +153,8 @@ VALUES (
         'organizer',
         0.15,
         '$argon2d$v=19$m=12,t=3,p=1$bHk2dTlzN3JjZDAwMDAwMA$rxf8jHFU0HO6+EA5F3qGYQ',
-        '/public/pictures/user_avatar_img/user_00004.jpg'
-    ),
-    (
-        13,
+        'https://homework2storage.blob.core.windows.net/blob/public/pictures/user_avatar_img/user_00004.jpg'),
+       (13,
         'Martin',
         'Horák',
         'other',
@@ -192,10 +165,8 @@ VALUES (
         'organizer',
         0.15,
         '$argon2d$v=19$m=12,t=3,p=1$bHk2dTlzN3JjZDAwMDAwMA$rxf8jHFU0HO6+EA5F3qGYQ',
-        '/public/pictures/user_avatar_img/user_00024.jpg'
-    ),
-    (
-        14,
+        'https://homework2storage.blob.core.windows.net/blob/public/pictures/user_avatar_img/user_00024.jpg'),
+       (14,
         'Veronika',
         'Svobodová',
         'female',
@@ -206,10 +177,8 @@ VALUES (
         'organizer',
         0.15,
         '$argon2d$v=19$m=12,t=3,p=1$bHk2dTlzN3JjZDAwMDAwMA$rxf8jHFU0HO6+EA5F3qGYQ',
-        '/public/pictures/user_avatar_img/user_00005.jpg'
-    ),
-    (
-        15,
+        'https://homework2storage.blob.core.windows.net/blob/public/pictures/user_avatar_img/user_00005.jpg'),
+       (15,
         'Daniel',
         'Novotný',
         'male',
@@ -220,10 +189,8 @@ VALUES (
         'organizer',
         0.15,
         '$argon2d$v=19$m=12,t=3,p=1$bHk2dTlzN3JjZDAwMDAwMA$rxf8jHFU0HO6+EA5F3qGYQ',
-        '/public/pictures/user_avatar_img/user_00025.jpg'
-    ),
-    (
-        16,
+        'https://homework2storage.blob.core.windows.net/blob/public/pictures/user_avatar_img/user_00025.jpg'),
+       (16,
         'Andrea',
         'Poláková',
         'other',
@@ -234,10 +201,8 @@ VALUES (
         'employee',
         0.15,
         '$argon2d$v=19$m=12,t=3,p=1$bHk2dTlzN3JjZDAwMDAwMA$rxf8jHFU0HO6+EA5F3qGYQ',
-        '/public/pictures/user_avatar_img/user_00026.jpg'
-    ),
-    (
-        17,
+        'https://homework2storage.blob.core.windows.net/blob/public/pictures/user_avatar_img/user_00026.jpg'),
+       (17,
         'Lukáš',
         'Veselý',
         'male',
@@ -248,10 +213,8 @@ VALUES (
         'employee',
         0.15,
         '$argon2d$v=19$m=12,t=3,p=1$bHk2dTlzN3JjZDAwMDAwMA$rxf8jHFU0HO6+EA5F3qGYQ',
-        '/public/pictures/user_avatar_img/user_00027.jpg'
-    ),
-    (
-        18,
+        'https://homework2storage.blob.core.windows.net/blob/public/pictures/user_avatar_img/user_00027.jpg'),
+       (18,
         'Kateřina',
         'Benešová',
         'female',
@@ -262,10 +225,8 @@ VALUES (
         'employee',
         0.15,
         '$argon2d$v=19$m=12,t=3,p=1$bHk2dTlzN3JjZDAwMDAwMA$rxf8jHFU0HO6+EA5F3qGYQ',
-        '/public/pictures/user_avatar_img/user_00006.jpg'
-    ),
-    (
-        19,
+        'https://homework2storage.blob.core.windows.net/blob/public/pictures/user_avatar_img/user_00006.jpg'),
+       (19,
         'Pavel',
         'Mach',
         'male',
@@ -276,10 +237,8 @@ VALUES (
         'employee',
         0.15,
         '$argon2d$v=19$m=12,t=3,p=1$bHk2dTlzN3JjZDAwMDAwMA$rxf8jHFU0HO6+EA5F3qGYQ',
-        '/public/pictures/user_avatar_img/user_00028.jpg'
-    ),
-    (
-        20,
+        'https://homework2storage.blob.core.windows.net/blob/public/pictures/user_avatar_img/user_00028.jpg'),
+       (20,
         'Lucie',
         'Pokorná',
         'female',
@@ -290,10 +249,8 @@ VALUES (
         'employee',
         0.15,
         '$argon2d$v=19$m=12,t=3,p=1$bHk2dTlzN3JjZDAwMDAwMA$rxf8jHFU0HO6+EA5F3qGYQ',
-        '/public/pictures/user_avatar_img/user_00007.jpg'
-    ),
-    (
-        21,
+        'https://homework2storage.blob.core.windows.net/blob/public/pictures/user_avatar_img/user_00007.jpg'),
+       (21,
         'Ondřej',
         'Zeman',
         'male',
@@ -304,10 +261,8 @@ VALUES (
         'employee',
         0.15,
         '$argon2d$v=19$m=12,t=3,p=1$bHk2dTlzN3JjZDAwMDAwMA$rxf8jHFU0HO6+EA5F3qGYQ',
-        '/public/pictures/user_avatar_img/user_00029.jpg'
-    ),
-    (
-        22,
+        'https://homework2storage.blob.core.windows.net/blob/public/pictures/user_avatar_img/user_00029.jpg'),
+       (22,
         'Hana',
         'Urbanová',
         'female',
@@ -318,10 +273,8 @@ VALUES (
         'employee',
         0.15,
         '$argon2d$v=19$m=12,t=3,p=1$bHk2dTlzN3JjZDAwMDAwMA$rxf8jHFU0HO6+EA5F3qGYQ',
-        '/public/pictures/user_avatar_img/user_00008.jpg'
-    ),
-    (
-        23,
+        'https://homework2storage.blob.core.windows.net/blob/public/pictures/user_avatar_img/user_00008.jpg'),
+       (23,
         'Jakub',
         'Kolář',
         'male',
@@ -332,10 +285,8 @@ VALUES (
         'employee',
         0.15,
         '$argon2d$v=19$m=12,t=3,p=1$bHk2dTlzN3JjZDAwMDAwMA$rxf8jHFU0HO6+EA5F3qGYQ',
-        '/public/pictures/user_avatar_img/user_00030.jpg'
-    ),
-    (
-        24,
+        'https://homework2storage.blob.core.windows.net/blob/public/pictures/user_avatar_img/user_00030.jpg'),
+       (24,
         'Ivana',
         'Šimková',
         'female',
@@ -346,10 +297,8 @@ VALUES (
         'employee',
         0.15,
         '$argon2d$v=19$m=12,t=3,p=1$bHk2dTlzN3JjZDAwMDAwMA$rxf8jHFU0HO6+EA5F3qGYQ',
-        '/public/pictures/user_avatar_img/user_00009.jpg'
-    ),
-    (
-        25,
+        'https://homework2storage.blob.core.windows.net/blob/public/pictures/user_avatar_img/user_00009.jpg'),
+       (25,
         'Marek',
         'Holý',
         'other',
@@ -360,10 +309,8 @@ VALUES (
         'employee',
         0.15,
         '$argon2d$v=19$m=12,t=3,p=1$bHk2dTlzN3JjZDAwMDAwMA$rxf8jHFU0HO6+EA5F3qGYQ',
-        '/public/pictures/user_avatar_img/user_00031.jpg'
-    ),
-    (
-        26,
+        'https://homework2storage.blob.core.windows.net/blob/public/pictures/user_avatar_img/user_00031.jpg'),
+       (26,
         'Tereza',
         'Kučerová',
         'female',
@@ -374,10 +321,8 @@ VALUES (
         'employee',
         0.15,
         '$argon2d$v=19$m=12,t=3,p=1$bHk2dTlzN3JjZDAwMDAwMA$rxf8jHFU0HO6+EA5F3qGYQ',
-        '/public/pictures/user_avatar_img/user_00010.jpg'
-    ),
-    (
-        27,
+        'https://homework2storage.blob.core.windows.net/blob/public/pictures/user_avatar_img/user_00010.jpg'),
+       (27,
         'David',
         'Kříž',
         'male',
@@ -388,10 +333,8 @@ VALUES (
         'employee',
         0.15,
         '$argon2d$v=19$m=12,t=3,p=1$bHk2dTlzN3JjZDAwMDAwMA$rxf8jHFU0HO6+EA5F3qGYQ',
-        '/public/pictures/user_avatar_img/user_00032.jpg'
-    ),
-    (
-        28,
+        'https://homework2storage.blob.core.windows.net/blob/public/pictures/user_avatar_img/user_00032.jpg'),
+       (28,
         'Aneta',
         'Vlčková',
         'female',
@@ -402,10 +345,8 @@ VALUES (
         'employee',
         0.15,
         '$argon2d$v=19$m=12,t=3,p=1$bHk2dTlzN3JjZDAwMDAwMA$rxf8jHFU0HO6+EA5F3qGYQ',
-        '/public/pictures/user_avatar_img/user_00011.jpg'
-    ),
-    (
-        29,
+        'https://homework2storage.blob.core.windows.net/blob/public/pictures/user_avatar_img/user_00011.jpg'),
+       (29,
         'Jan',
         'Procházka',
         'male',
@@ -416,10 +357,8 @@ VALUES (
         'employee',
         0.15,
         '$argon2d$v=19$m=12,t=3,p=1$bHk2dTlzN3JjZDAwMDAwMA$rxf8jHFU0HO6+EA5F3qGYQ',
-        '/public/pictures/user_avatar_img/user_00033.jpg'
-    ),
-    (
-        30,
+        'https://homework2storage.blob.core.windows.net/blob/public/pictures/user_avatar_img/user_00033.jpg'),
+       (30,
         'Nikola',
         'Šťastná',
         'female',
@@ -430,10 +369,8 @@ VALUES (
         'employee',
         0.15,
         '$argon2d$v=19$m=12,t=3,p=1$bHk2dTlzN3JjZDAwMDAwMA$rxf8jHFU0HO6+EA5F3qGYQ',
-        '/public/pictures/user_avatar_img/user_00012.jpg'
-    ),
-    (
-        31,
+        'https://homework2storage.blob.core.windows.net/blob/public/pictures/user_avatar_img/user_00012.jpg'),
+       (31,
         'Aleš',
         'Bláha',
         'male',
@@ -444,10 +381,8 @@ VALUES (
         'employee',
         0.15,
         '$argon2d$v=19$m=12,t=3,p=1$bHk2dTlzN3JjZDAwMDAwMA$rxf8jHFU0HO6+EA5F3qGYQ',
-        '/public/pictures/user_avatar_img/user_00034.jpg'
-    ),
-    (
-        32,
+        'https://homework2storage.blob.core.windows.net/blob/public/pictures/user_avatar_img/user_00034.jpg'),
+       (32,
         'Simona',
         'Havlová',
         'other',
@@ -458,10 +393,8 @@ VALUES (
         'employee',
         0.15,
         '$argon2d$v=19$m=12,t=3,p=1$bHk2dTlzN3JjZDAwMDAwMA$rxf8jHFU0HO6+EA5F3qGYQ',
-        '/public/pictures/user_avatar_img/user_00034.jpg'
-    ),
-    (
-        33,
+        'https://homework2storage.blob.core.windows.net/blob/public/pictures/user_avatar_img/user_00034.jpg'),
+       (33,
         'Michaela',
         'Sedláčková',
         'female',
@@ -472,10 +405,8 @@ VALUES (
         'employee',
         0.15,
         '$argon2d$v=19$m=12,t=3,p=1$bHk2dTlzN3JjZDAwMDAwMA$rxf8jHFU0HO6+EA5F3qGYQ',
-        '/public/pictures/user_avatar_img/user_00013.jpg'
-    ),
-    (
-        34,
+        'https://homework2storage.blob.core.windows.net/blob/public/pictures/user_avatar_img/user_00013.jpg'),
+       (34,
         'Jiří',
         'Šimek',
         'male',
@@ -486,10 +417,8 @@ VALUES (
         'employee',
         0.15,
         '$argon2d$v=19$m=12,t=3,p=1$bHk2dTlzN3JjZDAwMDAwMA$rxf8jHFU0HO6+EA5F3qGYQ',
-        '/public/pictures/user_avatar_img/user_00036.jpg'
-    ),
-    (
-        35,
+        'https://homework2storage.blob.core.windows.net/blob/public/pictures/user_avatar_img/user_00036.jpg'),
+       (35,
         'Eliška',
         'Vítková',
         'female',
@@ -500,10 +429,8 @@ VALUES (
         'employee',
         0.15,
         '$argon2d$v=19$m=12,t=3,p=1$bHk2dTlzN3JjZDAwMDAwMA$rxf8jHFU0HO6+EA5F3qGYQ',
-        '/public/pictures/user_avatar_img/user_00014.jpg'
-    ),
-    (
-        36,
+        'https://homework2storage.blob.core.windows.net/blob/public/pictures/user_avatar_img/user_00014.jpg'),
+       (36,
         'Patrik',
         'Holub',
         'male',
@@ -514,10 +441,8 @@ VALUES (
         'employee',
         0.15,
         '$argon2d$v=19$m=12,t=3,p=1$bHk2dTlzN3JjZDAwMDAwMA$rxf8jHFU0HO6+EA5F3qGYQ',
-        '/public/pictures/user_avatar_img/user_00037.jpg'
-    ),
-    (
-        37,
+        'https://homework2storage.blob.core.windows.net/blob/public/pictures/user_avatar_img/user_00037.jpg'),
+       (37,
         'Klára',
         'Soukupová',
         'other',
@@ -528,10 +453,8 @@ VALUES (
         'employee',
         0.15,
         '$argon2d$v=19$m=12,t=3,p=1$bHk2dTlzN3JjZDAwMDAwMA$rxf8jHFU0HO6+EA5F3qGYQ',
-        '/public/pictures/user_avatar_img/user_00038.jpg'
-    ),
-    (
-        38,
+        'https://homework2storage.blob.core.windows.net/blob/public/pictures/user_avatar_img/user_00038.jpg'),
+       (38,
         'Matěj',
         'Němec',
         'male',
@@ -542,10 +465,8 @@ VALUES (
         'employee',
         0.15,
         '$argon2d$v=19$m=12,t=3,p=1$bHk2dTlzN3JjZDAwMDAwMA$rxf8jHFU0HO6+EA5F3qGYQ',
-        '/public/pictures/user_avatar_img/user_00039.jpg'
-    ),
-    (
-        39,
+        'https://homework2storage.blob.core.windows.net/blob/public/pictures/user_avatar_img/user_00039.jpg'),
+       (39,
         'Barbora',
         'Kovářová',
         'female',
@@ -556,10 +477,8 @@ VALUES (
         'employee',
         0.15,
         '$argon2d$v=19$m=12,t=3,p=1$bHk2dTlzN3JjZDAwMDAwMA$rxf8jHFU0HO6+EA5F3qGYQ',
-        '/public/pictures/user_avatar_img/user_00015.jpg'
-    ),
-    (
-        40,
+        'https://homework2storage.blob.core.windows.net/blob/public/pictures/user_avatar_img/user_00015.jpg'),
+       (40,
         'Tomáš',
         'Němeček',
         'other',
@@ -570,10 +489,9 @@ VALUES (
         'employee',
         0.15,
         '$argon2d$v=19$m=12,t=3,p=1$bHk2dTlzN3JjZDAwMDAwMA$rxf8jHFU0HO6+EA5F3qGYQ',
-        '/public/pictures/user_avatar_img/user_00040.jpg'
-    );
+        'https://homework2storage.blob.core.windows.net/blob/public/pictures/user_avatar_img/user_00040.jpg');
 SELECT setval(
-        pg_get_serial_sequence('"user"', 'id'),
-        MAX("id")
-    )
+               pg_get_serial_sequence('"user"', 'id'),
+               MAX("id")
+       )
 FROM "user";

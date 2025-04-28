@@ -53,7 +53,7 @@ WORKDIR /app
 
 # Copy the compiled binary from the build stage
 COPY --from=builder /app/target/release/pv281-giglog .
-COPY --from=builder /app/public/ ./public
+COPY --from=builder /app/public/styles.css ./public/styles.css
 
 # Expose the port your Axum app will run on
 EXPOSE 3000
