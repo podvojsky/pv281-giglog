@@ -1,0 +1,25 @@
+{
+    "name": "pv281-giglog",
+    "version": "1.0.0",
+    "description": "To make it easy for you to get started with GitLab, here's a list of recommended next steps.",
+    "main": "index.js",
+    "directories": {
+        "doc": "doc"
+    },
+    "scripts": {
+        "build:css": "tailwindcss -i ./assets/styles.css -o ./public/styles.css --watch --minify"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "autoprefixer": "^10.4.20",
+        "postcss": "^8.4.47",
+        "prettier-plugin-jinja-template": "^2.0.0",
+        "prettier-plugin-tailwindcss": "^0.6.8",
+        "tailwindcss": "^3.4.14"
+    },
+    "devDependencies": {
+        "daisyui": "^4.12.23"
+    }
+}

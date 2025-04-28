@@ -1,0 +1,169 @@
+{% extends "views/base.html" %}
+
+{% block content %}
+    <div class="grid h-screen grid-rows-[70px_calc(100vh-70px)]">
+        <div class="navbar sticky top-0 z-10 border-b border-base-content/10 bg-base-100">
+            <div class="flex-1">
+                <a href="/" class="btn btn-ghost font-[metal-mania] text-xl uppercase">GIGLOG</a>
+            </div>
+            {% match session.user %}
+                {% when Some with (user) %}
+                <details class="dropdown dropdown-end">
+                    <summary class="btn btn-ghost">
+                        <div class="avatar">
+                            <div class="mask mask-squircle h-11 w-11">
+                                {% match user.avatar_url %}
+                                    {% when Some with (avatar_url) %}
+                                    <img src="{{ avatar_url }}" alt="Avatar" />
+                                    {% when None %}
+                                    <img src="/public/pictures/default_avatar.jpg" alt="Avatar" />
+                                {% endmatch %}
+                            </div>
+                        </div>
+                        <div class="flex flex-col items-start">
+                            <div class="text-base">{{ user.username }}</div>
+                            <div class="font-normal text-neutral-500">{{ user.role }}</div>
+                        </div>
+                    </summary>
+
+                    <ul class="menu dropdown-content z-[5] w-52 rounded-box bg-base-100 p-2 shadow">
+                        <li>
+                            <details open>
+                                <summary>
+                                    <span>Settings</span>
+                                </summary>
+                                <ul>
+                                    <li>
+                                        <a href="/settings/details">
+                                            <span>Details</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/settings/password">
+                                            <span>Change Password</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </details>
+                        </li>
+                        <li><a href="/logout" class="font-semibold text-error">Log out</a></li>
+                    </ul>
+                </details>
+                {% when None %}
+                <div class="flex-none">
+                    <a href="/login" class="btn btn-outline">Log in</a>
+                </div>
+            {% endmatch %}
+        </div>
+        <div class="grid grid-cols-[180px_auto] grid-rows-[calc(100vh-70px)] overflow-y-auto">
+            <ul class="menu sticky top-0 flex-nowrap overflow-y-auto border-r border-base-content/10 bg-base-100 p-2">
+                <li>
+                    <a href="/events" class="{% if let Some(ActiveRoute::Events) = active_route %}active{% endif %}">
+                        <i data-lucide="music"></i> Events
+                    </a>
+                </li>
+                {% match session.user %}
+                    {% when Some with (user) %}
+                    <li>
+                        <a href="/jobs" class="{% if let Some(ActiveRoute::MyJobs) = active_route %}active{% endif %}">
+                            <i data-lucide="briefcase-business"></i> My Jobs
+                        </a>
+                    </li>
+                    <li>
+                        <a
+                            href="/attendance"
+                            class="{% if let Some(ActiveRoute::Attendance) = active_route %}active{% endif %}"
+                        >
+                            <i data-lucide="calendar-check"></i> Attendance
+                        </a>
+                    </li>
+                    {% if user.role == UserRole::Organizer || user.role == UserRole::Admin %}
+                        <div class="divider my-0 before:h-[1px] after:h-[1px]"></div>
+                        <li>
+                            <a
+                                href="/employees"
+                                class="{% if let Some(ActiveRoute::Employees) = active_route %}active{% endif %}"
+                            >
+                                <i data-lucide="users"></i> Employees
+                            </a>
+                        </li>
+                        <li>
+                            <a
+                                href="/employments"
+                                class="{% if let Some(ActiveRoute::Employments) = active_route %}active{% endif %}"
+                            >
+                                <i data-lucide="layers"></i> Employments
+                            </a>
+                        </li>
+                        <li>
+                            <details open>
+                                <summary
+                                    class="{% if let Some(ActiveRoute::Manage) = active_route %}
+                                        bg-neutral text-neutral-content hover:bg-neutral hover:text-neutral-content
+                                    {% endif %}"
+                                >
+                                    <i data-lucide="cog"></i>
+                                    <span>Manage</span>
+                                </summary>
+                                <ul>
+                                    <li>
+                                        <a href="/manage/events">
+                                            <span>Events</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/manage/jobs">
+                                            <span>Jobs</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/manage/venues">
+                                            <span>Venues</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </details>
+                        </li>
+                    {% endif %}
+                    {% if user.role == UserRole::Admin %}
+                        <div class="divider my-0 before:h-[1px] after:h-[1px]"></div>
+                        <li>
+                            <details open>
+                                <summary
+                                    class="{% if let Some(ActiveRoute::AdminPanel) = active_route %}
+                                        bg-neutral text-neutral-content hover:bg-neutral hover:text-neutral-content
+                                    {% endif %}"
+                                >
+                                    <i data-lucide="cog"></i>
+                                    <span>Admin Panel</span>
+                                </summary>
+                                <ul>
+                                    <li>
+                                        <a href="/admin/users">
+                                            <span>Users</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/admin/events">
+                                            <span>Events</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/admin/jobs">
+                                            <span>Jobs</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </details>
+                        </li>
+                    {% endif %}
+                    {% when None %}
+                {% endmatch %}
+            </ul>
+            <div>
+                {% block main_content %}
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,172 @@
+{% extends "views/base/main.html" %}
+{% import "partials/title.html" as title %}
+{% import "partials/event_draft_badge.html" as event_draft_badge %}
+{% import "partials/manage_job_employees.html" as manage_job_employees %}
+
+{% block title %}
+    {% call title::title("Manage Job") %}
+{% endblock %}
+
+{% block main_content %}
+    <div class="py-4">
+        <div class="container mx-auto flex flex-col gap-6">
+            <div class="flex justify-center">
+                <div class="flex w-full max-w-[500px] flex-col gap-4">
+                    <h1>Manage Job</h1>
+                    <form
+                        hx-patch="/manage/jobs"
+                        hx-target-error="#global-toast"
+                        hx-on:htmx:after-request="showGlobalToast(event)"
+                        hx-include="[name='event_id'], [name='category_id']"
+                        class="flex flex-col gap-4"
+                    >
+                        <input type="hidden" name="job_id" value="{{ job.id }}" />
+                        <div class="flex flex-col gap-2">
+                            <label class="form-control w-full">
+                                <div class="label">
+                                    <span class="label-text">Associated Event</span>
+                                </div>
+                                <select id="event_id" name="event_id" class="select select-bordered w-full">
+                                    <option value="" disabled>Select Event</option>
+                                    <option value="{{ job.event.id }}" selected>{{ job.event.name }}</option>
+                                    {% for event in events %}
+                                        <option value="{{ event.id }}">{{ event.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </label>
+                            <div class="grid grid-cols-[auto_max-content] gap-x-4">
+                                <label class="form-control w-full">
+                                    <div class="label">
+                                        <span class="label-text">Job Name</span>
+                                    </div>
+                                    <input
+                                        id="job-name"
+                                        name="job_name"
+                                        type="text"
+                                        placeholder="{{ job.name }}"
+                                        value="{{ job.name }}"
+                                        class="input input-bordered w-full"
+                                    />
+                                </label>
+                                <div class="form-control justify-end">
+                                    <label class="label cursor-pointer gap-2">
+                                        <span class="label-text">Opened for registration</span>
+                                        {% if job.is_opened_for_registration %}
+                                            <input
+                                                id="opened-for-registration"
+                                                name="opened_for_registration"
+                                                type="checkbox"
+                                                class="checkbox"
+                                                checked
+                                            />
+                                        {% else %}
+                                            <input
+                                                id="opened-for-registration"
+                                                name="opened_for_registration"
+                                                type="checkbox"
+                                                class="checkbox"
+                                            />
+                                        {% endif %}
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-x-4">
+                                <label class="form-control w-full">
+                                    <div class="label">
+                                        <span class="label-text">Hourly salary (CZK)</span>
+                                    </div>
+                                    <input
+                                        id="salary"
+                                        name="salary"
+                                        class="input input-bordered"
+                                        type="number"
+                                        min="0"
+                                        value="{{ job.salary }}"
+                                    />
+                                </label>
+                                <label class="form-control w-full">
+                                    <div class="label">
+                                        <span class="label-text">Maximum Capacity</span>
+                                    </div>
+                                    <input
+                                        id="capacity"
+                                        name="capacity"
+                                        class="input input-bordered"
+                                        type="number"
+                                        min="0"
+                                        value="{{ job.capacity }}"
+                                    />
+                                </label>
+                            </div>
+
+                            <label class="form-control w-full">
+                                <div class="label">
+                                    <span class="label-text">Category</span>
+                                </div>
+                                <select id="category-id" name="category_id" class="select select-bordered w-full">
+                                    <option value="" disabled>Select Job Category</option>
+                                    <option value="{{ job.category.id }}">{{ job.category.name }}</option>
+                                    {% for job_category in job_categories %}
+                                        <option value="{{ job_category.id }}">{{ job_category.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </label>
+
+                            <label class="form-control w-full">
+                                <div class="label">
+                                    <span class="label-text">Job Description</span>
+                                </div>
+                                {% match job.description %}
+                                    {% when Some with (description) %}
+                                    <textarea
+                                        id="description"
+                                        name="description"
+                                        class="textarea textarea-bordered"
+                                        placeholder="Detailed information about the job."
+                                        rows="6"
+                                    >
+{{ description }}</textarea
+                                    >
+                                    {% when None %}
+                                    <textarea
+                                        id="description"
+                                        name="description"
+                                        class="textarea textarea-bordered"
+                                        placeholder="Detailed information about the job."
+                                        rows="6"
+                                    ></textarea>
+                                {% endmatch %}
+                            </label>
+
+                            <label class="form-control w-full">
+                                <div class="label">
+                                    <span class="label-text">Instructions for workers</span>
+                                </div>
+                                <textarea
+                                    id="instructions"
+                                    name="instructions"
+                                    class="textarea textarea-bordered"
+                                    placeholder="What, where, when, ..."
+                                    rows="6"
+                                >
+{{ job.instructions }}</textarea
+                                >
+                            </label>
+
+                            <div class="flex flex-col gap-2">
+                                <span class="label-text">Employees</span>
+                                <div id="employees">
+                                    {% call manage_job_employees::manage_job_employees(possible_employees, employees, job.id) %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex flex-col gap-4">
+                            <button class="btn btn-primary">Update Job</button>
+                            <a href="/manage/jobs" class="btn">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

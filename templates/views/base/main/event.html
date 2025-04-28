@@ -1,0 +1,105 @@
+{% extends "views/base/main.html" %}
+{% import "partials/title.html" as title %}
+{% import "partials/event_draft_badge.html" as event_draft_badge %}
+{% import "partials/job_state.html" as job_state %}
+
+{% block title %}
+    {% call title::title("Event") %}
+{% endblock %}
+
+{% block main_content %}
+    <div class="flex justify-center">
+        <div class="container flex max-w-[800px] flex-col p-4 pb-16">
+            <div class="grid grid-cols-[400px_1fr] gap-4">
+                <img src="{{ event.img_url }}" alt="alt" class="h-[250px] w-full rounded-2xl object-cover" />
+                <div class="mx-0 flex flex-col gap-4 rounded-br-2xl rounded-tr-2xl">
+                    <div class="flex justify-between">
+                        <h1>{{ event.name }}</h1>
+                    </div>
+                    {% if event.is_draft %}
+                        <div>{% call event_draft_badge::event_draft_badge() %}</div>
+                    {% endif %}
+                    <div class="flex flex-col gap-1">
+                        {% if event.date_start == event.date_end %}
+                            <div class="flex items-center gap-1">
+                                <i data-lucide="calendar-days" class="h-4 w-4"></i>
+                                <span>{{ event.date_start }}</span>
+                            </div>
+                        {% else %}
+                            <div class="flex items-center gap-1">
+                                <i data-lucide="calendar-range" class="h-4 w-4"></i>
+                                <div>
+                                    <span>{{ event.date_start }}</span>
+                                    to
+                                    <span>{{ event.date_end }}</span>
+                                </div>
+                            </div>
+                        {% endif %}
+                        <div class="flex items-center gap-1">
+                            <i data-lucide="map-pin" class="h-4 w-4"></i>
+                            {% match event.venue.address_url %}
+                                {% when Some with (address_url) %}
+                                <a href="{{ address_url }}" class="link" target="_blank"> {{ event.venue.name }} </a>
+                                {% when None %}
+                                <span> {{ event.venue.name }} </span>
+                            {% endmatch %}
+                        </div>
+                        <div class="flex items-center gap-1">
+                            <i data-lucide="mail" class="h-4 w-4"></i>
+                            <a href="mailto:{{ event.owner.email }}" class="link" target="_blank">
+                                {{ event.owner.first_name }} {{ event.owner.last_name }}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="divider before:h-[1px] after:h-[1px]"></div>
+            <div>
+                {% match event.description %}
+                    {% when Some with (description) %}
+                    <p>{{ description }}</p>
+                    {% when None %}
+                {% endmatch %}
+            </div>
+            {% if !event.job_positions.is_empty() %}
+                <div class="divider before:h-[1px] after:h-[1px]"></div>
+                <div class="flex flex-col gap-4">
+                    <h1>Available job positions</h1>
+                    <div class="flex flex-col gap-2">
+                        {% for job in event.job_positions %}
+                            <div id="job-{{ job.id }}" class="collapse collapse-arrow bg-base-200">
+                                <input type="checkbox" name="job-{{ job.id }}" />
+                                <div class="collapse-title flex items-end gap-4">
+                                    <span class="text-xl font-medium"> {{ job.name }} </span>
+                                    {% match job.position_category %}
+                                        {% when Some with (category) %}
+                                        <div class="badge badge-accent flex h-auto items-center gap-1">
+                                            <span class="pb-[3px]"> {{ category.name }} </span>
+                                        </div>
+                                        {% when None %}
+                                    {% endmatch %}
+                                </div>
+                                <div class="collapse-content flex flex-col gap-4">
+                                    <div class="grid grid-cols-[max-content_max-content] gap-x-8">
+                                        <div class="font-semibold">Salary</div>
+                                        <div class="text-end">{{ job.salary }} CZK</div>
+                                        <div class="font-semibold">Capacity</div>
+                                        <div class="text-end">{{ job.current_capacity }}/{{ job.max_capacity }}</div>
+                                    </div>
+                                    {% match job.description %}
+                                        {% when Some with (description) %}
+                                        <div>{{ description }}</div>
+                                        {% when None %}
+                                    {% endmatch %}
+                                    <div id="job-state-{{ job.id }}" class="flex gap-2 self-end">
+                                        {% call job_state::job_state(job, session, is_in_past) %}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

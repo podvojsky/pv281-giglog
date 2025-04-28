@@ -1,0 +1,10 @@
+{% macro rating_stars(rating) %}
+    <div class="flex gap-[2px]">
+        {% for _ in 0..rating %}
+            <i data-lucide="star" class="h-[14px] w-[14px] stroke-1" fill="yellow"></i>
+        {% endfor %}
+        {% for _ in rating..5 %}
+            <i data-lucide="star" class="h-[14px] w-[14px] stroke-1"></i>
+        {% endfor %}
+    </div>
+{% endmacro %}

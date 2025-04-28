@@ -1,0 +1,170 @@
+{% extends "views/base/main.html" %}
+{% import "partials/title.html" as title %}
+{% import "partials/event_draft_badge.html" as event_draft_badge %}
+
+{% block title %}
+    {% call title::title("Manage Venue") %}
+{% endblock %}
+
+{% block main_content %}
+    <div class="py-4">
+        <div class="container mx-auto flex flex-col gap-6">
+            <div class="flex justify-center">
+                <div class="flex w-full max-w-[500px] flex-col gap-4">
+                    <h1>Manage Venue</h1>
+                    <form
+                        hx-patch="/manage/venues"
+                        hx-target-error="#global-toast"
+                        hx-on:htmx:after-request="showGlobalToast(event)"
+                        class="flex flex-col gap-4"
+                    >
+                        <input type="hidden" name="venue_id" value="{{ venue.id }}" />
+                        <div class="flex flex-col gap-2">
+                            <label class="form-control w-full">
+                                <div class="label">
+                                    <span class="label-text">Venue Name</span>
+                                </div>
+                                <input
+                                    id="venue-name"
+                                    name="venue_name"
+                                    type="text"
+                                    placeholder="{{ venue.name }}"
+                                    value="{{ venue.name }}"
+                                    class="input input-bordered w-full"
+                                />
+                            </label>
+
+                            <label class="form-control w-full">
+                                <div class="label">
+                                    <span class="label-text">State</span>
+                                </div>
+                                <input
+                                    id="state"
+                                    name="state"
+                                    type="text"
+                                    placeholder="{{ venue.state }}"
+                                    value="{{ venue.state }}"
+                                    class="input input-bordered w-full"
+                                />
+                            </label>
+
+                            <div class="grid grid-cols-2 gap-x-4">
+                                <label class="form-control w-full">
+                                    <div class="label">
+                                        <span class="label-text">Town</span>
+                                    </div>
+                                    <input
+                                        id="town"
+                                        name="town"
+                                        type="text"
+                                        placeholder="{{ venue.town }}"
+                                        value="{{ venue.town }}"
+                                        class="input input-bordered w-full"
+                                    />
+                                </label>
+                                <label class="form-control w-full">
+                                    <div class="label">
+                                        <span class="label-text">Postal Code</span>
+                                    </div>
+                                    <input
+                                        id="postal_code"
+                                        name="postal_code"
+                                        type="text"
+                                        placeholder="{{ venue.postal_code }}"
+                                        value="{{ venue.postal_code }}"
+                                        class="input input-bordered w-full"
+                                    />
+                                </label>
+                            </div>
+
+                            <div class="grid grid-cols-2 gap-x-4">
+                                <label class="form-control w-full">
+                                    <div class="label">
+                                        <span class="label-text">Street</span>
+                                    </div>
+                                    <input
+                                        id="street_name"
+                                        name="street_name"
+                                        type="text"
+                                        placeholder="{{ venue.street_name }}"
+                                        value="{{ venue.street_name }}"
+                                        class="input input-bordered w-full"
+                                    />
+                                </label>
+                                <label class="form-control w-full">
+                                    <div class="label">
+                                        <span class="label-text">Street number</span>
+                                    </div>
+                                    <input
+                                        id="street_number"
+                                        name="street_number"
+                                        type="text"
+                                        placeholder="{{ venue.street_number }}"
+                                        value="{{ venue.street_number }}"
+                                        class="input input-bordered w-full"
+                                    />
+                                </label>
+                            </div>
+
+                            <label class="form-control w-full">
+                                <div class="label">
+                                    <span class="label-text">Address URL</span>
+                                </div>
+                                {% match venue.address_url %}
+                                    {% when Some with (address_url) %}
+                                    <input
+                                        id="address_url"
+                                        name="address_url"
+                                        type="text"
+                                        placeholder="{{ address_url }}"
+                                        value="{{ address_url }}"
+                                        class="input input-bordered w-full"
+                                    />
+                                    {% when None %}
+                                    <input
+                                        id="address_url"
+                                        name="address_url"
+                                        type="text"
+                                        placeholder="https://maps.google.com/address"
+                                        value=""
+                                        class="input input-bordered w-full"
+                                    />
+                                {% endmatch %}
+                            </label>
+
+                            <label class="form-control w-full">
+                                <div class="label">
+                                    <span class="label-text">Venue Description</span>
+                                </div>
+                                {% match venue.description %}
+                                    {% when Some with (description) %}
+                                    <textarea
+                                        id="description"
+                                        name="description"
+                                        class="textarea textarea-bordered"
+                                        placeholder="Detailed information about the venue."
+                                        rows="6"
+                                    >
+{{ description }}</textarea
+                                    >
+                                    {% when None %}
+                                    <textarea
+                                        id="description"
+                                        name="description"
+                                        class="textarea textarea-bordered"
+                                        placeholder="Detailed information about the venue."
+                                        rows="6"
+                                    ></textarea>
+                                {% endmatch %}
+                            </label>
+                        </div>
+                        <div class="flex flex-col gap-4">
+                            <button class="btn btn-primary">Update Venue</button>
+                            <a href="/manage/venues" class="btn">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,35 @@
+{% import "partials/event_card.html" as event_card %}
+
+{% macro events_content(future_events, past_events) %}
+    {% if !future_events.is_empty() %}
+        <div class="collapse collapse-arrow">
+            <input type="checkbox" name="future-events" checked />
+            <div class="collapse-title"><h1>Upcoming events</h1></div>
+            <div class="collapse-content">
+                <div class="flex flex-wrap gap-4">
+                    {% for event in future_events %}
+                        {% call event_card::event_card(event, false) %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    {% if !past_events.is_empty() %}
+        <div class="collapse collapse-arrow">
+            <input type="checkbox" name="past-events" checked />
+            <div class="collapse-title"><h1>Events that have already taken place</h1></div>
+            <div class="collapse-content">
+                <div class="flex flex-wrap gap-4">
+                    {% for event in past_events %}
+                        {% call event_card::event_card(event, false) %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    {% if future_events.is_empty() && past_events.is_empty() %}
+        <div class="flex h-[400px] items-center justify-center text-base-content/50">
+            There are currently no events taking place.
+        </div>
+    {% endif %}
+{% endmacro %}

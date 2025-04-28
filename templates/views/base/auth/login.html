@@ -1,0 +1,52 @@
+{% extends "views/base/auth.html" %}
+{% import "partials/title.html" as title %}
+
+{% block title %}
+    {% call title::title("Log in") %}
+{% endblock %}
+
+{% block form %}
+    <form
+        hx-post="/login"
+        hx-target-error="#global-toast"
+        hx-on:htmx:after-request="showGlobalToast(event)"
+        id="auth-form"
+        class="flex w-full max-w-xs flex-col gap-8"
+        onsubmit="return false;"
+    >
+        <div class="flex flex-col gap-2">
+            <label class="form-control w-full max-w-xs">
+                <div class="label">
+                    <span class="label-text">Username</span>
+                </div>
+                <input
+                    id="username"
+                    name="username"
+                    type="text"
+                    placeholder="admin"
+                    class="input input-bordered w-full max-w-xs"
+                />
+            </label>
+            <label class="form-control w-full max-w-xs">
+                <div class="label">
+                    <span class="label-text">Password</span>
+                </div>
+                <input
+                    id="password"
+                    name="password"
+                    type="password"
+                    placeholder="iloverust"
+                    class="input input-bordered w-full max-w-xs"
+                />
+            </label>
+        </div>
+        <div class="flex flex-col">
+            {% if let Some(next) = next %}
+                <input type="hidden" name="next" value="{{ next }}" />
+            {% endif %}
+            <input type="submit" value="Log in" class="btn btn-neutral" />
+            <div class="divider my-3">Or</div>
+            <a href="/register" class="btn btn-outline">Create new account</a>
+        </div>
+    </form>
+{% endblock form %}

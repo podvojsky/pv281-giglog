@@ -1,0 +1,62 @@
+{% macro job_state(job, session, is_in_past) %}
+    {% match job.employment_state %}
+        {% when Some with (employment_state) %}
+        {% match employment_state %}
+            {% when EmploymentState::Accepted %}
+            <button class="btn btn-primary" onclick="job_instruction_modal_{{ job.id }}.showModal()">
+                Instructions
+            </button>
+            <dialog id="job_instruction_modal_{{ job.id }}" class="modal">
+                <div class="modal-box">
+                    <form method="dialog">
+                        <button class="btn btn-circle btn-ghost btn-sm absolute right-2 top-2">✕</button>
+                    </form>
+                    <h3 class="text-lg font-bold">{{ job.name }}: Instructions</h3>
+                    <p class="py-4">{{ job.instructions_html }}</p>
+                </div>
+            </dialog>
+            <div class="rounded-lg border border-success px-4 py-3 text-success">Accepted</div>
+            {% when EmploymentState::Pending %}
+            <div class="tooltip tooltip-left" data-tip="Your request for this position is pending.">
+                <div class="rounded-lg border border-warning px-4 py-3 text-warning">Pending</div>
+            </div>
+            {% when EmploymentState::Rejected %}
+            <div
+                class="tooltip tooltip-left"
+                data-tip="Your request for this position was rejected by the event organizer."
+            >
+                <div class="rounded-lg border border-error px-4 py-3 text-error">Rejected</div>
+            </div>
+            {% when EmploymentState::Done %}
+            <div class="tooltip tooltip-left" data-tip="You have finished working this job.">
+                <div class="rounded-lg border border-primary px-4 py-3 text-primary">Done</div>
+            </div>
+        {% endmatch %}
+        {% when None %}
+        {% if !is_in_past %}
+            {% match session.user %}
+                {% when Some with (_) %}
+                {% if job.is_opened_for_registration %}
+                    <button
+                        hx-post="/partials/base/main/events/event/job-state/{{ job.id }}"
+                        hx-target="#job-state-{{ job.id }}"
+                        class="btn btn-primary"
+                    >
+                        Apply for position
+                    </button>
+                {% else %}
+                    <div
+                        class="tooltip tooltip-left"
+                        data-tip="This job position is currently not opened for registration."
+                    >
+                        <button class="btn btn-primary" disabled>Apply for position</button>
+                    </div>
+                {% endif %}
+                {% when None %}
+                <div class="tooltip tooltip-left" data-tip="You have to be logged in to apply for job positions.">
+                    <button class="btn btn-primary" disabled>Apply for position</button>
+                </div>
+            {% endmatch %}
+        {% endif %}
+    {% endmatch %}
+{% endmacro %}

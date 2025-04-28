@@ -1,0 +1,160 @@
+{% extends "views/base/main.html" %}
+{% import "partials/title.html" as title %}
+{% import "partials/event_draft_badge.html" as event_draft_badge %}
+{% import "partials/manage_event_managers.html" as manage_event_managers %}
+
+{% block title %}
+    {% call title::title("Manage Event") %}
+{% endblock %}
+
+{% block main_content %}
+    <div class="py-4">
+        <div class="container mx-auto flex flex-col gap-6">
+            <div class="flex justify-center">
+                <div class="flex w-full max-w-[500px] flex-col gap-4">
+                    <h1>Manage Event</h1>
+                    <form
+                        hx-patch="/events"
+                        hx-target-error="#global-toast"
+                        hx-on:htmx:after-request="showGlobalToast(event)"
+                        hx-include="[name='venue_id']"
+                        class="flex flex-col gap-4"
+                    >
+                        <div class="flex flex-col gap-2">
+                            <div class="grid grid-cols-[auto_max-content] gap-x-4">
+                                <label class="form-control w-full">
+                                    <div class="label">
+                                        <span class="label-text">Event Name</span>
+                                    </div>
+                                    <input
+                                        id="event-name"
+                                        name="event_name"
+                                        type="text"
+                                        placeholder="{{ event.name }}"
+                                        value="{{ event.name }}"
+                                        class="input input-bordered w-full"
+                                    />
+                                </label>
+                                <div class="form-control justify-end">
+                                    <label class="label cursor-pointer gap-2">
+                                        <span class="label-text">Draft</span>
+                                        {% if event.is_draft %}
+                                            <input
+                                                id="create-as-draft"
+                                                name="create_as_draft"
+                                                type="checkbox"
+                                                class="checkbox"
+                                                checked="checked"
+                                            />
+                                        {% else %}
+                                            <input
+                                                id="create-as-draft"
+                                                name="create_as_draft"
+                                                type="checkbox"
+                                                class="checkbox"
+                                            />
+                                        {% endif %}
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-x-4">
+                                <label class="form-control w-full">
+                                    <div class="label">
+                                        <span class="label-text">Beginning Date</span>
+                                    </div>
+                                    <input
+                                        id="date-start"
+                                        name="date_start"
+                                        class="input input-bordered"
+                                        type="date"
+                                        value="{{ event.date_start }}"
+                                    />
+                                </label>
+                                <label class="form-control w-full">
+                                    <div class="label">
+                                        <span class="label-text">End date</span>
+                                    </div>
+                                    <input
+                                        id="date-end"
+                                        name="date_end"
+                                        class="input input-bordered"
+                                        type="date"
+                                        value="{{ event.date_end }}"
+                                    />
+                                </label>
+                            </div>
+                            <label class="form-control w-full">
+                                <div class="label">
+                                    <span class="label-text">Event Hero Image URL</span>
+                                </div>
+                                <input
+                                    id="hero-img-url"
+                                    name="hero_img_url"
+                                    type="text"
+                                    placeholder="https://images.cdn.com/image.jpg"
+                                    value="{{ event.img_url }}"
+                                    class="input input-bordered w-full"
+                                />
+                            </label>
+                            <div class="flex items-end justify-start gap-1">
+                                <label class="form-control w-full">
+                                    <div class="label">
+                                        <span class="label-text">Venue</span>
+                                    </div>
+                                    <select id="venue-id" name="venue_id" class="select select-bordered w-full">
+                                        <option value="" disabled>Select Venue</option>
+                                        <option value="{{ event.venue.id }}" selected>
+                                            {{ event.venue.name }} - {{ event.venue.town }}
+                                        </option>
+                                        {% for venue in venues %}
+                                            <option value="{{ venue.id }}">{{ venue.name }} - {{ venue.town }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </label>
+                                <a href="/venues/create" target="_blank" class="btn">
+                                    <i data-lucide="plus" class="h-4 w-4"></i>
+                                </a>
+                            </div>
+
+                            <label class="form-control w-full">
+                                <div class="label">
+                                    <span class="label-text">Description</span>
+                                </div>
+                                {% match event.description %}
+                                    {% when Some with (description) %}
+                                    <textarea
+                                        id="description"
+                                        name="description"
+                                        class="textarea textarea-bordered"
+                                        placeholder="{{ description }}"
+                                        rows="6"
+                                    >
+{{ description }}</textarea
+                                    >
+                                    {% when None %}
+                                    <textarea
+                                        id="description"
+                                        name="description"
+                                        class="textarea textarea-bordered"
+                                        placeholder="Detailed information about the event."
+                                        rows="6"
+                                    ></textarea>
+                                {% endmatch %}
+                            </label>
+                            <div class="flex flex-col gap-2">
+                                <span class="label-text">Managers</span>
+                                <div id="managers">
+                                    {% call manage_event_managers::manage_event_managers(possible_managers, managers, event.id) %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex flex-col gap-4">
+                            <button class="btn btn-primary">Update Event</button>
+                            <a href="/manage/events" class="btn">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

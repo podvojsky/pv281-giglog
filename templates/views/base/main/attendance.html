@@ -1,0 +1,42 @@
+{% extends "views/base/main.html" %}
+{% import "partials/title.html" as title %}
+
+{% block title %}
+    {% call title::title("Attendance") %}
+{% endblock %}
+
+{% block main_content %}
+    <div class="flex justify-center">
+        <div class="container flex flex-col p-4 pb-16">
+            <div class="flex h-full flex-col justify-center gap-4">
+                <div class="navbar sticky top-0 z-[3] flex justify-center gap-4 bg-base-100">
+                    <select
+                        name="event_id"
+                        hx-get="/partials/base/main/attendance/attendance-job-options"
+                        hx-target="#attendance-job-options"
+                        class="select select-bordered w-full max-w-xs"
+                    >
+                        <option value="-1" disabled selected>Select Event</option>
+                        {% for event in events %}
+                            <option value="{{ event.id }}">{{ event.name }}</option>
+                        {% endfor %}
+                    </select>
+                    <select
+                        id="attendance-job-options"
+                        name="job_position_id"
+                        hx-get="/partials/base/main/attendance/attendance-log"
+                        hx-target="#attendance-log"
+                        class="select select-bordered w-full max-w-xs"
+                    >
+                        <option value="-1" disabled selected>Select Job</option>
+                    </select>
+                </div>
+                <div id="attendance-log">
+                    <span class="flex w-full justify-center text-base-content/50">
+                        Please select the event and the job you did.
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,203 @@
+{% extends "views/base/main.html" %}
+{% import "partials/title.html" as title %}
+
+{% block title %}
+{% call title::title("My Jobs") %}
+{% endblock %}
+
+{% block main_content %}
+
+<div
+    id="filter-navbar"
+    class="navbar sticky top-0 z-[3] flex gap-4 items-center border-b border-base-content/10 bg-base-100 p-4"
+    hx-post="/jobs"
+    hx-trigger="change from:select, input from:input, change"
+    hx-target="#jobs-table"
+    hx-vals='{}'
+>
+
+    <div class="flex flex-col">
+        <label for="state-select" class="label text-sm font-medium text-base-content">State</label>
+        <select
+            id="state-select"
+            class="select select-bordered w-48"
+            onchange="updateFilters(this, 'state')"
+        >
+            <option value="All states">All states</option>
+            {% for state in employment_states %}
+            <option value="{{ state }}">{{ state }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="flex flex-col">
+        <label for="job-name" class="label text-sm font-medium text-base-content">Job Name</label>
+        <input
+            id="job-name"
+            type="text"
+            class="input input-bordered w-48"
+            placeholder="Enter job name"
+            oninput="updateFilters(this, 'job_name')"
+        >
+    </div>
+
+    <div class="flex flex-col">
+        <label for="event-name" class="label text-sm font-medium text-base-content">Event</label>
+        <input
+            id="event-name"
+            type="text"
+            class="input input-bordered w-48"
+            placeholder="Enter event name"
+            oninput="updateFilters(this, 'event')"
+        >
+    </div>
+
+    <div class="flex flex-col">
+        <label for="date-picker" class="label text-sm font-medium text-base-content">Date From</label>
+        <input
+            id="date-picker"
+            type="date"
+            class="input input-bordered w-48"
+            onchange="updateFilters(this, 'date_start')"
+        >
+    </div>
+
+    <div class="flex flex-col">
+        <label for="date-to-picker" class="label text-sm font-medium text-base-content">Date To</label>
+        <input
+            id="date-to-picker"
+            type="date"
+            class="input input-bordered w-48"
+            onchange="updateFilters(this, 'date_end')"
+        >
+    </div>
+
+    <div class="flex flex-col">
+        <label for="venue-name" class="label text-sm font-medium text-base-content">Venue</label>
+        <input
+            id="venue-name"
+            type="text"
+            class="input input-bordered w-48"
+            placeholder="Enter venue name"
+            oninput="updateFilters(this, 'venue')"
+        >
+    </div>
+</div>
+
+<div class="overflow-x-auto">
+    <table class="table">
+        <thead>
+        <tr>
+            <th onclick="sortTable('state')" class="cursor-pointer px-4 py-2 text-left">
+                <div class="flex items-center space-x-2">
+                    State <i data-lucide="chevron-up" class="sort-icon" data-column="state"></i>
+                </div>
+            </th>
+            <th onclick="sortTable('job_name')" class="cursor-pointer px-4 py-2 text-left">
+                <div class="flex items-center space-x-2">
+                    Job Name <i data-lucide="chevron-up" class="sort-icon" data-column="job_name"></i>
+                </div>
+            </th>
+            <th onclick="sortTable('event')" class="cursor-pointer px-4 py-2 text-left">
+                <div class="flex items-center space-x-2">
+                    Event <i data-lucide="chevron-up" class="sort-icon" data-column="event"></i>
+                </div>
+            </th>
+            <th onclick="sortTable('date_start')" class="cursor-pointer px-4 py-2 text-left">
+                <div class="flex items-center space-x-2">
+                    Date (From - To) <i data-lucide="chevron-up" class="sort-icon" data-column="date_start"></i>
+                </div>
+            </th>
+            <th onclick="sortTable('venue')" class="cursor-pointer px-4 py-2 text-left">
+                <div class="flex items-center space-x-2">
+                    Venue <i data-lucide="chevron-up" class="sort-icon" data-column="venue"></i>
+                </div>
+            </th>
+            <th onclick="sortTable('hours_worked')" class="cursor-pointer px-4 py-2 text-left">
+                <div class="flex items-center space-x-2">
+                    Hours Worked <i data-lucide="chevron-up" class="sort-icon" data-column="hours_worked"></i>
+                </div>
+            </th>
+            <th onclick="sortTable('salary_tax_free')" class="cursor-pointer px-4 py-2 text-left">
+                <div class="flex items-center space-x-2">
+                    Salary (Tax-Free) <i data-lucide="chevron-up" class="sort-icon" data-column="salary_tax_free"></i>
+                </div>
+            </th>
+            <th onclick="sortTable('salary_taxed')" class="cursor-pointer px-4 py-2 text-left">
+                <div class="flex items-center space-x-2">
+                    Salary (Taxed) <i data-lucide="chevron-up" class="sort-icon" data-column="salary_taxed"></i>
+                </div>
+            </th>
+            <th class="cursor-pointer px-4 py-2 text-left">
+                <div class="flex items-center space-x-2">
+                    Rating
+                </div>
+            </th>
+        </tr>
+        </thead>
+        <tbody id="jobs-table">
+            {% include "my_jobs_table_body.html" %}
+        </tbody>
+    </table>
+</div>
+<script>
+    document.addEventListener("htmx:afterSettle", function() {
+        lucide.createIcons();
+    });
+
+    (function () {
+        const filters = {
+            state: "All states",
+            date_start: "",
+            date_end: "",
+            job_name: "",
+            event: "",
+            venue: "",
+            sort_by: "date_start",
+            sort_direction: "desc"
+        };
+
+        function updateFilters(element, key) {
+            filters[key] = element.value;
+            sendFilters();
+        }
+
+        function sortTable(column) {
+
+            if (filters.sort_by === column) {
+                filters.sort_direction = filters.sort_direction === "asc" ? "desc" : "asc";
+            } else {
+                filters.sort_by = column;
+                filters.sort_direction = "asc";
+            }
+
+            updateSortIcons();
+            sendFilters();
+        }
+
+        function updateSortIcons() {
+            document.querySelectorAll(".sort-icon").forEach(icon => {
+                icon.setAttribute("data-lucide", "chevron-up"); // Reset all icons to chevron-up
+            });
+
+            document.querySelectorAll(".sort-icon").forEach(icon => {
+                if (icon.dataset.column === filters.sort_by) {
+                    icon.setAttribute("data-lucide", filters.sort_direction === "asc" ? "chevron-up" : "chevron-down");
+                }
+            });
+
+            lucide.createIcons();
+        }
+
+        function sendFilters() {
+            const navbar = document.querySelector('#filter-navbar');
+            navbar.setAttribute('hx-vals', JSON.stringify(filters));
+            navbar.dispatchEvent(new Event('change', { bubbles: true }));
+        }
+
+        window.updateFilters = updateFilters;
+        window.sortTable = sortTable;
+    })();
+
+</script>
+{% endblock %}

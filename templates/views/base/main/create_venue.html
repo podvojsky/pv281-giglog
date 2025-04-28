@@ -1,0 +1,144 @@
+{% extends "views/base/main.html" %}
+{% import "partials/title.html" as title %}
+{% import "partials/event_draft_badge.html" as event_draft_badge %}
+
+{% block title %}
+    {% call title::title("Create Venue") %}
+{% endblock %}
+
+{% block main_content %}
+    <div class="py-4">
+        <div class="container mx-auto flex flex-col gap-6">
+            <div class="flex justify-center">
+                <div class="flex w-full max-w-[500px] flex-col gap-4">
+                    <h1>Create New Venue</h1>
+                    <form
+                        hx-post="/create/venues"
+                        hx-target-error="#global-toast"
+                        hx-on:htmx:after-request="showGlobalToast(event)"
+                        class="flex flex-col gap-4"
+                    >
+                        <div class="flex flex-col gap-2">
+                            <label class="form-control w-full">
+                                <div class="label">
+                                    <span class="label-text">Venue Name</span>
+                                </div>
+                                <input
+                                    id="venue-name"
+                                    name="venue_name"
+                                    type="text"
+                                    placeholder="Amfiteátr Jihlava"
+                                    value=""
+                                    class="input input-bordered w-full"
+                                />
+                            </label>
+
+                            <label class="form-control w-full">
+                                <div class="label">
+                                    <span class="label-text">State</span>
+                                </div>
+                                <input
+                                    id="state"
+                                    name="state"
+                                    type="text"
+                                    placeholder="Česká Republika"
+                                    value=""
+                                    class="input input-bordered w-full"
+                                />
+                            </label>
+
+                            <div class="grid grid-cols-2 gap-x-4">
+                                <label class="form-control w-full">
+                                    <div class="label">
+                                        <span class="label-text">Town</span>
+                                    </div>
+                                    <input
+                                        id="town"
+                                        name="town"
+                                        type="text"
+                                        placeholder="Praha"
+                                        value=""
+                                        class="input input-bordered w-full"
+                                    />
+                                </label>
+                                <label class="form-control w-full">
+                                    <div class="label">
+                                        <span class="label-text">Postal Code</span>
+                                    </div>
+                                    <input
+                                        id="postal_code"
+                                        name="postal_code"
+                                        type="text"
+                                        placeholder="190 00"
+                                        value=""
+                                        class="input input-bordered w-full"
+                                    />
+                                </label>
+                            </div>
+
+                            <div class="grid grid-cols-2 gap-x-4">
+                                <label class="form-control w-full">
+                                    <div class="label">
+                                        <span class="label-text">Street</span>
+                                    </div>
+                                    <input
+                                        id="street_name"
+                                        name="street_name"
+                                        type="text"
+                                        placeholder="Českomoravská"
+                                        value=""
+                                        class="input input-bordered w-full"
+                                    />
+                                </label>
+                                <label class="form-control w-full">
+                                    <div class="label">
+                                        <span class="label-text">Street number</span>
+                                    </div>
+                                    <input
+                                        id="street_number"
+                                        name="street_number"
+                                        type="text"
+                                        placeholder="2345/17a"
+                                        value=""
+                                        class="input input-bordered w-full"
+                                    />
+                                </label>
+                            </div>
+
+                            <label class="form-control w-full">
+                                <div class="label">
+                                    <span class="label-text">Address URL</span>
+                                </div>
+                                <input
+                                    id="address_url"
+                                    name="address_url"
+                                    type="text"
+                                    placeholder="https://maps.google.com/address"
+                                    value=""
+                                    class="input input-bordered w-full"
+                                />
+                            </label>
+
+                            <label class="form-control w-full">
+                                <div class="label">
+                                    <span class="label-text">Venue Description</span>
+                                </div>
+                                <textarea
+                                    id="description"
+                                    name="description"
+                                    class="textarea textarea-bordered"
+                                    placeholder="Detailed information about the venue."
+                                    rows="6"
+                                ></textarea>
+                            </label>
+                        </div>
+                        <div class="flex flex-col gap-4">
+                            <button class="btn btn-primary">Create Venue</button>
+                            <a href="/manage/venues" class="btn">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

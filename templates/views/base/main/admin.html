@@ -1,0 +1,23 @@
+{% extends "views/base/main.html" %}
+{% import "partials/title.html" as title %}
+
+{% block title %}
+    {% call title::title("Admin Panel") %}
+{% endblock %}
+
+{% block main_content %}
+    <div class="grid grid-cols-[180px_auto] grid-rows-[calc(100vh-70px)] overflow-y-auto">
+        <ul class="menu sticky top-0 flex-nowrap overflow-y-auto border-r border-base-content/10 bg-base-100 p-2">
+            <li>
+                <a href="/users/manage" class="{% if let Some(ActiveRoute::Events) = active_route %}active{% endif %}">
+                    <i data-lucide="music"></i> Events
+                </a>
+            </li>
+            <li>
+                <a href="/events/manage" class="{% if let Some(ActiveRoute::Events) = active_route %}active{% endif %}">
+                    <i data-lucide="music"></i> Manage All Events
+                </a>
+            </li>
+        </ul>
+    </div>
+{% endblock %}

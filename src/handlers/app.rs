@@ -1,0 +1,13 @@
+pub mod admin;
+pub mod attendance;
+pub mod auth;
+pub mod employees;
+pub mod employment;
+pub mod employments;
+pub mod event_manager_relation;
+pub mod events;
+pub mod index;
+pub mod jobs;
+pub mod page_not_found;
+pub mod settings;
+pub mod venues;

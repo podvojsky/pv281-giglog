@@ -1,0 +1,98 @@
+{% import "partials/rating_stars.html" as rating_stars %}
+{% for job in my_jobs %}
+    <tr class="hover">
+        <td>
+            {% match job.state %}
+                {% when EmploymentState::Accepted %}
+                <div class="rounded-lg border border-success px-4 py-3 text-success">Accepted</div>
+                {% when EmploymentState::Pending %}
+                <div class="rounded-lg border border-warning px-4 py-3 text-warning">Pending</div>
+                {% when EmploymentState::Rejected %}
+                <div class="rounded-lg border border-error px-4 py-3 text-error">Rejected</div>
+                {% when EmploymentState::Done %}
+                <div class="rounded-lg border border-primary px-4 py-3 text-primary">Done</div>
+            {% endmatch %}
+        </td>
+        <td><a class="link" href="/events/{{ job.event_id }}#job-{{ job.job_id }}">{{ job.job_name }}</a></td>
+        <td><a class="link" href="/events/{{ job.event_id }}">{{ job.event_name }}</a></td>
+        <td>
+            {% if job.date_from == job.date_to %}
+                <div class="flex items-center gap-1">
+                    <i data-lucide="calendar-days" class="h-4 w-4"></i>
+                    <span>{{ job.date_from }}</span>
+                </div>
+            {% else %}
+                <div class="flex items-center gap-1">
+                    <i data-lucide="calendar-range" class="h-4 w-4"></i>
+                    <div>
+                        <span>{{ job.date_from }}</span>
+                        to
+                        <span>{{ job.date_to }}</span>
+                    </div>
+                </div>
+            {% endif %}
+        </td>
+        <td>
+            <div class="flex items-center gap-1">
+                <i data-lucide="map-pin" class="h-4 w-4"></i>
+                {% match job.venue_address_url %}
+                    {% when Some with (address_url) %}
+                    <a href="{{ address_url }}" class="link" target="_blank"> {{ job.venue_name }} </a>
+                    {% when None %}
+                    <span> {{ job.venue_name }} </span>
+                {% endmatch %}
+            </div>
+        </td>
+        <td>{{ job.hours_worked }}</td>
+        <td>{{ job.salary_tax_free }} CZK</td>
+        <td>{{ job.salary_taxed }} CZK</td>
+        <td>
+            {% if job.rating == 0 %}
+                <img src="public/svg/no_rating.svg" alt="No Rating" width="90" height="30">
+            {% else %}
+                {% call rating_stars::rating_stars(job.rating) %}
+            {% endif %}
+        </td>
+        <td>
+            <button class="btn btn-primary" onclick="job_instruction_modal_{{ job.job_id }}.showModal()">
+                Instructions
+            </button>
+            <dialog id="job_instruction_modal_{{ job.job_id }}" class="modal">
+                <div class="modal-box">
+                    <form method="dialog">
+                        <button class="btn btn-circle btn-ghost btn-sm absolute right-2 top-2">✕</button>
+                    </form>
+                    <h3 class="text-lg font-bold">{{ job.job_name }}: Instructions</h3>
+                    <p class="py-4">{{ job.job_instructions }}</p>
+                </div>
+            </dialog>
+        </td>
+    </tr>
+{% endfor %}
+<tr class="border-t-4 border-gray-500 bg-gray-100 font-bold">
+    <td>Total</td>
+    <td>
+        {{ job_summary.total_jobs }}
+        {% if job_summary.total_jobs == 1 %}job{% else %}jobs{% endif %}
+    </td>
+    <td>
+        {{ job_summary.unique_events }}
+        {% if job_summary.unique_events == 1 %}event{% else %}events{% endif %}
+    </td>
+    <td>
+        <div class="flex items-center gap-1">
+            <i data-lucide="calendar-range" class="h-4 w-4"></i>
+            <span>{{ job_summary.formatted_earliest_date() }}</span> to
+            <span>{{ job_summary.formatted_latest_date() }}</span>
+        </div>
+    </td>
+    <td>
+        {{ job_summary.unique_venues }}
+        {% if job_summary.unique_venues == 1 %}venue{% else %}venues{% endif %}
+    </td>
+    <td>{{ job_summary.total_hours_worked }}</td>
+    <td>{{ job_summary.total_salary_tax_free }} CZK</td>
+    <td>{{ job_summary.total_salary_taxed }} CZK</td>
+    <td>{{ job_summary.average_rating }}</td>
+    <td></td>
+</tr>

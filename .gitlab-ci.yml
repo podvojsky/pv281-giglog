@@ -1,0 +1,48 @@
+workflow:
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+
+variables:
+  IMAGE_NAME: pv281-giglog
+  IMAGE_TAR: pv281-giglog.tar
+
+default:
+  image: rust:1.82.0-bookworm
+  tags:
+    - giglog
+
+stages:
+  - build
+  - deploy
+
+build-image:
+  stage: build
+  image: docker:24.0.5
+  services:
+    - docker:24.0.5-dind
+  script:
+    - docker -v
+    - unset DOCKER_HOST
+    - docker build --build-arg DATABASE_URL=$DATABASE_URL -build-arg SERVER_ADDRESS=0.0.0.0:3000 --no-cache -t $IMAGE_NAME .
+    - docker save $IMAGE_NAME -o $IMAGE_TAR
+  artifacts:
+    paths:
+      - $IMAGE_TAR
+    expire_in: 10 minutes
+
+deploy:
+  stage: deploy
+  image: docker:24.0.5
+  services:
+    - docker:24.0.5-dind
+  before_script:
+    - docker -v
+    - echo "$AZURE_PASSWORD" | docker login $AZURE_REGISTRY -u "$AZURE_USERNAME" --password-stdin
+  script:
+    - docker load -i $IMAGE_TAR
+    - docker tag $IMAGE_NAME $AZURE_REGISTRY/$IMAGE_NAME:latest
+    - docker push $AZURE_REGISTRY/$IMAGE_NAME:latest
+  dependencies:
+    - build-image
+  rules:
+    - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == $CI_DEFAULT_BRANCH

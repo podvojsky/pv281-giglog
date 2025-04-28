@@ -1,0 +1,137 @@
+{% extends "views/base/main.html" %}
+{% import "partials/title.html" as title %}
+{% import "partials/event_draft_badge.html" as event_draft_badge %}
+
+{% block title %}
+    {% call title::title("Create Job") %}
+{% endblock %}
+
+{% block main_content %}
+    <div class="py-4">
+        <div class="container mx-auto flex flex-col gap-6">
+            <div class="flex justify-center">
+                <div class="flex w-full max-w-[500px] flex-col gap-4">
+                    <h1>Create New Job</h1>
+                    <form
+                        hx-post="/create/jobs"
+                        hx-target-error="#global-toast"
+                        hx-on:htmx:after-request="showGlobalToast(event)"
+                        hx-include="[name='event_id'], [name='category_id']"
+                        class="flex flex-col gap-4"
+                    >
+                        <div class="flex flex-col gap-2">
+                            <label class="form-control w-full">
+                                <div class="label">
+                                    <span class="label-text">Associated Event</span>
+                                </div>
+                                <select id="event_id" name="event_id" class="select select-bordered w-full">
+                                    <option value="" disabled selected>Select Event</option>
+                                    {% for event in events %}
+                                        <option value="{{ event.id }}">{{ event.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </label>
+                            <div class="grid grid-cols-[auto_max-content] gap-x-4">
+                                <label class="form-control w-full">
+                                    <div class="label">
+                                        <span class="label-text">Job Name</span>
+                                    </div>
+                                    <input
+                                        id="job-name"
+                                        name="job_name"
+                                        type="text"
+                                        placeholder="Kontrola vstupenek"
+                                        value=""
+                                        class="input input-bordered w-full"
+                                    />
+                                </label>
+                                <div class="form-control justify-end">
+                                    <label class="label cursor-pointer gap-2">
+                                        <span class="label-text">Opened for registration</span>
+                                        <input
+                                            id="opened-for-registration"
+                                            name="opened_for_registration"
+                                            type="checkbox"
+                                            class="checkbox"
+                                            checked
+                                        />
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-x-4">
+                                <label class="form-control w-full">
+                                    <div class="label">
+                                        <span class="label-text">Hourly salary (CZK)</span>
+                                    </div>
+                                    <input
+                                        id="salary"
+                                        name="salary"
+                                        class="input input-bordered"
+                                        type="number"
+                                        min="0"
+                                        value=""
+                                    />
+                                </label>
+                                <label class="form-control w-full">
+                                    <div class="label">
+                                        <span class="label-text">Maximum Capacity</span>
+                                    </div>
+                                    <input
+                                        id="capacity"
+                                        name="capacity"
+                                        class="input input-bordered"
+                                        type="number"
+                                        min="0"
+                                        value=""
+                                    />
+                                </label>
+                            </div>
+
+                            <label class="form-control w-full">
+                                <div class="label">
+                                    <span class="label-text">Category</span>
+                                </div>
+                                <select id="category-id" name="category_id" class="select select-bordered w-full">
+                                    <option value="" disabled selected>Select Job Category</option>
+                                    {% for job_category in job_categories %}
+                                        <option value="{{ job_category.id }}">{{ job_category.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </label>
+
+                            <label class="form-control w-full">
+                                <div class="label">
+                                    <span class="label-text">Job Description</span>
+                                </div>
+                                <textarea
+                                    id="description"
+                                    name="description"
+                                    class="textarea textarea-bordered"
+                                    placeholder="Detailed information about the job."
+                                    rows="6"
+                                ></textarea>
+                            </label>
+
+                            <label class="form-control w-full">
+                                <div class="label">
+                                    <span class="label-text">Instructions for workers</span>
+                                </div>
+                                <textarea
+                                    id="instructions"
+                                    name="instructions"
+                                    class="textarea textarea-bordered"
+                                    placeholder="What, where, when, ..."
+                                    rows="6"
+                                ></textarea>
+                            </label>
+                        </div>
+                        <div class="flex flex-col gap-4">
+                            <button class="btn btn-primary">Create Job</button>
+                            <a href="/manage/jobs" class="btn">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

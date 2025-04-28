@@ -1,0 +1,4 @@
+<option value="-1" disabled selected>Select Job</option>
+{% for job in jobs %}
+    <option value="{{ job.id }}">{{ job.name }}</option>
+{% endfor %}

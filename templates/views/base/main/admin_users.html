@@ -1,0 +1,107 @@
+{% extends "views/base/main.html" %}
+{% import "partials/title.html" as title %}
+
+{% block title %}
+{% call title::title("users") %}
+{% endblock %}
+
+{% block main_content %}
+
+<div class="flex items-end gap-4 p-4 border-b border-base-content/10 bg-base-100">
+
+    <a href="/admin/user/create" class="btn btn-primary">Add User</a>
+
+    <div
+        id="filter-navbar"
+        class="flex gap-4 items-end"
+        hx-post="/admin/users"
+        hx-trigger="change from:select, input from:input, change"
+        hx-target="#admin-users-table"
+        hx-vals='{"role": "All roles", "last_name": "", "username": ""}'
+    >
+        <div class="flex flex-col">
+            <label for="last_name" class="label text-sm font-medium text-base-content">Last Name</label>
+            <input
+                id="last_name"
+                type="text"
+                class="input input-bordered w-48"
+                placeholder="Enter event name"
+                oninput="updateUsersFilters(this, 'last_name')"
+            >
+        </div>
+
+        <div class="flex flex-col">
+            <label for="username" class="label text-sm font-medium text-base-content">Username</label>
+            <input
+                id="username"
+                type="text"
+                class="input input-bordered w-48"
+                placeholder="Enter job name"
+                oninput="updateUsersFilters(this, 'username')"
+            >
+        </div>
+
+        <div class="flex flex-col">
+            <label for="role-select" class="label text-sm font-medium text-base-content">Role</label>
+            <select
+                id="role-select"
+                class="select select-bordered w-48"
+                onchange="updateUsersFilters(this, 'role')"
+            >
+                <option value="All roles" selected>All roles</option>
+                <option value="Employee">Employee</option>
+                <option value="Organizer">Organizer</option>
+                <option value="Admin">Admin</option>
+            </select>
+        </div>
+    </div>
+</div>
+
+
+<div class="overflow-x-auto">
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Role</th>
+            <th>Gender</th>
+            <th>Age</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Tax Rate</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody id="admin-users-table">
+        {% include "admin_users_table.html" %}
+        </tbody>
+    </table>
+</div>
+
+<script>
+    document.addEventListener("htmx:afterSettle", function() {
+        lucide.createIcons();
+    });
+
+    (function () {
+        const filters = {
+            role: "All roles",
+            last_name: "",
+            username: ""
+        };
+
+        function updateFilters(element, key) {
+            filters[key] = element.value;
+            sendFilters();
+        }
+
+        function sendFilters() {
+            const navbar = document.querySelector('#filter-navbar');
+            navbar.setAttribute('hx-vals', JSON.stringify(filters));
+            navbar.dispatchEvent(new Event('change', { bubbles: true }));
+        }
+
+        window.updateUsersFilters = updateFilters;
+    })();
+</script>
+{% endblock %}

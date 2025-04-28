@@ -1,0 +1,54 @@
+{% extends "views/base/main.html" %}
+{% import "partials/title.html" as title %}
+
+{% block title %}
+    {% call title::title("Employees") %}
+{% endblock %}
+
+{% block main_content %}
+    <div class="overflow-x-auto">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Gender</th>
+                    <th>Age</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Tax Rate</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for employee in employees %}
+                    <tr>
+                        <td>
+                            <div class="flex items-center gap-3">
+                                <div class="avatar">
+                                    <div class="mask mask-squircle h-12 w-12">
+                                        {% match employee.avatar_url %}
+                                            {% when Some with (avatar_url) %}
+                                            <img src="{{ avatar_url }}" alt="Avatar" />
+                                            {% when None %}
+                                            <img src="/public/pictures/default_avatar.jpg" alt="Avatar" />
+                                        {% endmatch %}
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="font-bold">{{ employee.first_name }} {{ employee.last_name }}</div>
+                                    <div class="text-sm opacity-70">{{ employee.username }}</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>{{ employee.gender }}</td>
+                        <td>{{ employee.age }}</td>
+                        <td><a class="link" href="mailto:{{ employee.email }}">{{ employee.email }}</a></td>
+                        <td><a class="link" href="tel:{{ employee.phone }}">{{ employee.phone }}</a></td>
+                        <td>{{ employee.tax_rate }}</td>
+                        <th><a href="/employees/{{ employee.id }}" class="btn btn-primary">Details</a></th>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

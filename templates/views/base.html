@@ -1,0 +1,51 @@
+{% import "partials/title.html" as title %}
+
+<!doctype html>
+
+<html lang="en" class="no-animation min-h-screen">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        {% block title %}
+            {% call title::title("Index") %}
+        {% endblock %}
+        {% block head %}
+        {% endblock %}
+        <link href="/public/styles.css" rel="stylesheet" />
+        <link rel="icon" href="/public/favicon/favicon.ico" type="image/x-icon" />
+        <script
+            src="https://unpkg.com/htmx.org@2.0.3"
+            integrity="sha384-0895/pl2MU10Hqc6jd4RvrthNlDiE9U1tWmX7WRESftEDRosgxNsQG/Ze9YMRzHq"
+            crossorigin="anonymous"
+        ></script>
+        <script src="https://unpkg.com/htmx-ext-response-targets@2.0.0/response-targets.js"></script>
+    </head>
+    <body hx-ext="response-targets" hx-boost="true" class="min-h-screen">
+        <div id="global-toast" class="absolute bottom-4 right-4 z-50"></div>
+        {% block content %}
+            <div>Placeholder content</div>
+        {% endblock %}
+    </body>
+
+    <script>
+        function showGlobalToast(event, show_only_on_error = true) {
+            let globalToastElement = document.getElementById('global-toast');
+            let response = event.detail.xhr;
+
+            if (response.status >= 400 && show_only_on_error) {
+                globalToastElement.classList.remove('hidden');
+            } else if (!show_only_on_error) {
+                globalToastElement.classList.remove('hidden');
+            }
+        }
+
+        function hideGlobalToast() {
+            let globalToastElement = document.getElementById('global-toast');
+            globalToastElement.classList.add('hidden');
+        }
+    </script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        lucide.createIcons();
+    </script>
+</html>

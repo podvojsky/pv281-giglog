@@ -1,0 +1,65 @@
+{% extends "views/base/main.html" %}
+{% import "partials/title.html" as title %}
+
+{% block title %}
+    {% call title::title("Manage Jobs") %}
+{% endblock %}
+
+{% block main_content %}
+    <div class="flex flex-col gap-2 p-4">
+        <a href="/create/jobs" class="btn btn-secondary flex w-max self-end">
+            <i data-lucide="plus" class="h-4 w-4"></i>
+            <span>Create New Job</span>
+        </a>
+        {% if !jobs.is_empty() %}
+            <div class="overflow-x-auto">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Job Name</th>
+                            <th>Associated Event</th>
+                            <th>Capacity</th>
+                            <th>Category</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for job in jobs %}
+                            <tr id="job-table-record-{{ job.id }}">
+                                <td>
+                                    <div class="flex flex-col gap-1">
+                                        <a href="/events/{{ job.event.id }}#job-{{ job.id }}" class="link">
+                                            {{ job.name }}
+                                        </a>
+                                        {% if !job.is_opened_for_registration %}
+                                            <div class="badge badge-warning">Registration Closed</div>
+                                        {% endif %}
+                                    </div>
+                                </td>
+                                <td><a href="/events/{{ job.event.id }}" class="link">{{ job.event.name }}</a></td>
+                                <td>{{ job.current_capacity }}/{{ job.max_capacity }}</td>
+                                <td>{{ job.category.name }}</td>
+                                <td>
+                                    <div>
+                                        <a href="/manage/jobs/{{ job.id }}" class="btn btn-primary">Update</a>
+                                        <button
+                                            hx-delete="/manage/jobs/{{ job.id }}"
+                                            hx-target="#job-table-record-{{ job.id }}"
+                                            hx-swap="delete"
+                                            hx-confirm="Are you sure you wish to delete this job ({{ job.name }})?"
+                                            class="btn text-error"
+                                        >
+                                            Delete
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <div class="text-center text-2xl text-base-content/50">You have currently no jobs.</div>
+        {% endif %}
+    </div>
+{% endblock %}

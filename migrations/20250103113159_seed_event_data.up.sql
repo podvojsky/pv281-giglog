@@ -1,0 +1,146 @@
+INSERT INTO "event" (
+    "id",
+    "name",
+    "date_start",
+    "date_end",
+    "img_url",
+    "description",
+    "is_draft",
+    "venue_id",
+    "owner_id"
+    )
+VALUES
+    (
+        1,
+        'MAGMAFEST 2024',
+        '8/9/2024',
+        '8/10/2024',
+        '/public/pictures/event_img/event_00001.jpg',
+        'Magmafest je již kultovní rockový festival za účasti těch nejpopulárnějších českých a slovenských rockových kapel u nás. V roce 2024 proběhne již dvanáctý ročník festivalu MAGMAFEST, který se bude konat v pátek 9. 8. a sobotu 10. 8. 2024 v Jihlavě v mystickém areálu letního kina (ul. Na stoupách).',
+        False,
+        1,
+        6
+    ),
+    (
+        2,
+        'MAGMAFEST 2025',
+        '8/15/2025',
+        '8/15/2025',
+        '/public/pictures/event_img/event_00002.jpg',
+        'Magmafest je již kultovní rockový festival za účasti špičkových českých a slovenských rockových kapel u nás. V roce 2025 proběhne již třináctý ročník festivalu Magmafest, který se bude konat v pátek 15. 8. a sobotu 16. 8. 2025 v Jihlavě v letním kině.',
+        False,
+        1,
+        6
+   ),
+    (
+        3,
+        'Festival HIMLHERGOTFEST',
+        '9/6/2025',
+        '9/6/2025',
+        '/public/pictures/event_img/event_00003.png',
+        'Echtšlágrgruppe TRAUTENBERK slibuje playlist plný osvědčených pecek i nových songů, koncert plný nasazení a potu. Aničku svůdnější víc, než kdy jindy, Zemského radu přísnějšího, než kdy jindy a zbytek kapely hlasitější, než kdy jindy! V Čechách stále stoupající hvězda a festivalová stálice nenechá tvoji taneční kyčel v klidu a vykouzlí Ti dlouhý úsměv na tváři. Tak doraž na koncert!',
+        False,
+        2,
+        7
+    ),
+    (
+        4,
+        'Festival ROCK IN PLZEŇ',
+        '8/15/2025',
+        '8/15/2025',
+        '/public/pictures/event_img/event_00004.png',
+        'Magmafest je již kultovní rockový festival za účasti špičkových českých a slovenských rockových kapel u nás. V roce 2025 proběhne již třináctý ročník festivalu Magmafest, který se bude konat v pátek 15. 8. a sobotu 16. 8. 2025 v Jihlavě v letním kině.',
+        False,
+        2,
+        7
+    ),
+    (
+        5,
+        'Animefest',
+        '5/23/2025',
+        '5/25/2025',
+        '/public/pictures/event_img/event_00005.png',
+        'Animefest je největší festival tradiční i populární japonské kultury v České republice již od roku 2004. Další ročník se koná od 23. do 25. května 2025 na brněnském výstavišti. Naši návštěvníci mají široký okruh zájmů, od anime a mangy, komiksů, filmů a televizních seriálů, po hry a cosplay.',
+        False,
+        3,
+        8
+    ),
+    (
+        6,
+        'Rock for People 2025',
+        '6/11/2025',
+        '6/14/2025',
+        '/public/pictures/event_img/event_00006.jpg',
+        'Již 30. ročník festivalu Rock for People proběhne 11. do 15. června 2025 v hradeckém Parku 360. Na čtyřdenní termín festivalu od 11. do 14. června 2025 naváže speciální přidaný Narozeninový den 15. 6. v hlavní roli s legendárními Guns N’ Roses a dalšími kapelami.',
+        False,
+        4,
+        8
+    ),
+    (
+        7,
+        'LYNYRD SKYNYRD 2025 Tour',
+        '7/7/2025',
+        '7/7/2025',
+        '/public/pictures/event_img/event_00007.jpg',
+        'Legendární americká kapela Lynyrd Skynyrd poprvé vystoupí v Praze! Autoři ikonického hitu Sweet Home Alabama se představí 7. července 2025 v O2 areně. Koncert je součástí turné, které oslavuje neuvěřitelných 50 let jejich hudební kariéry.',
+        False,
+        5,
+        9
+    ),
+    (
+        8,
+        'Rock in 2025',
+        '5/25/2025',
+        '5/25/2025',
+        '/public/pictures/event_img/event_00008.avif',
+        'Zažijte to nejlepší z domácí rockové scény v jeden den na jednom pódiu přímo u vás! Ve vašem městě, ve vašem amfiteátru se vystřídají zvučná jména, s důrazem na profesionální zázemí, špičkovou techniku a maximální komfort pro návštěvníky.',
+        False,
+        6,
+        9
+    ),
+    (
+        9,
+        'Beats for love',
+        '7/2/2025',
+        '7/5/2025',
+        '/public/pictures/event_img/event_00009.jpg',
+        'Beats for Love je festival elektronické taneční hudby pořádaný v jádru industriální národní kulturní památky. Prostředí Dolních Vítkovic plné železných kulis se na čtyři dny zaplní spoustou vynikající hudby a bohatého doprovodného programu. Vzniká tak jedinečná atmosféra plná zábavy a zážitků.',
+        False,
+        7,
+        9
+    ),
+    (
+        10,
+        'Harley',
+        '3/22/2025',
+        '3/22/2025',
+        '/public/pictures/event_img/event_00010.avif',
+        'Název Jedem si pro vás naznačuje, že oproti plánovaným halovým koncertům ve velkých městech na podzim tohoto roku, se na jaře kapela vypraví blíže fanouškům a vyrazí za nimi do sálů napříč celou Českou republikou. Součástí každého večera bude samozřejmě i autogramiáda kapely a playlist bude opravdu nabušený největšími hity kapely a fanoušci si ho vychutnají v téměř dvouhodinvé délce.',
+        False,
+        8,
+        9
+    ),
+    (
+        11,
+        'MIRAI Summer Fest 2025',
+        '9/6/2025',
+        '9/6/2025',
+        '/public/pictures/event_img/event_00011.jpg',
+        'Náš vlastní festival Mirai Summer Fest se po letošním úspěšném ročníku vrací do vašich měst i v roce 2025! A my z toho máme obrovskou radost. Skvělou atmosféru s našlapaným programem, super jídlem, drinky, a především nabitou večerní show přivezeme do 15 měst. Není pro nás nic cennějšího než si užít festivalový vibe s vámi, našimi fanoušky a opět spolu strávit čas.',
+        False,
+        9,
+        9
+    ),
+    (
+        12,
+        'Na muzice ve Fabrice - Bigband Svitavy',
+        '4/27/2025',
+        '4/27/2025',
+        '/public/pictures/event_img/event_00012.webp',
+        'Na muzice ve Fabrice SBB zve všechny příznivce a milovníky taneční a swingové hudby na pohodové nedělní odpoledne. V programu zazní swingové evergreeny a jazzové standardy, které jsou prověřeny časem a kvalitní úpravy skladeb ze starší i současné popové scény. Odpoledne se stolovou úpravou, s konzumací, k poslechu i k tanci.',
+        False,
+        10,
+        10
+    );
+
+SELECT setval(pg_get_serial_sequence('"event"', 'id'), MAX("id")) FROM "event";

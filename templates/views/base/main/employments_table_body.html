@@ -1,0 +1,131 @@
+{% import "partials/rating_stars.html" as rating_stars %}
+{% for employment in employments %}
+<tr id="row-{{ employment.employment_id }}">
+    <td><a class="link" href="/events/{{ employment.event_id }}">{{ employment.event_name }}</a></td>
+    <td>{{ employment.job_name }}</td>
+    <td>{{ employment.current_capacity }}/{{ employment.max_capacity }}</td>
+    <td><a class="link" href="/employees/{{ employment.employee_id }}">{{ employment.employee_name }}</a></td>
+    <td>
+        <div class="flex items-center gap-1">
+            {% match employment.state %}
+            {% when EmploymentState::Pending %}
+            <div class="h-3 w-3 rounded-full bg-warning"></div>
+            <div>Pending</div>
+            {% when EmploymentState::Accepted %}
+            <div class="h-3 w-3 rounded-full bg-success"></div>
+            <div>Accepted</div>
+            {% when EmploymentState::Rejected %}
+            <div class="h-3 w-3 rounded-full bg-error"></div>
+            <div>Rejected</div>
+            {% when EmploymentState::Done %}
+            <div class="h-3 w-3 rounded-full bg-info"></div>
+            <div>Done</div>
+            {% endmatch %}
+        </div>
+    </td>
+    <td>
+        <div class="flex gap-2">
+            {% match employment.state %}
+            {% when EmploymentState::Pending %}
+            <button id="accept-{{ employment.employment_id }}"
+                    hx-post="/employments/action"
+                    onclick="updateFilterHxVals('accept', {{ employment.employment_id }})"
+                    hx-target="#employments-table"
+                    hx-vals='{"method": "Accept", "employment_id": "{{ employment.employment_id }}"}'
+                    hx-target-error="#global-toast"
+                    hx-on:htmx:after-request="showGlobalToast(event, true)"
+                    class="btn btn-success">
+                Accept
+            </button>
+            <button id="reject-{{ employment.employment_id }}"
+                    hx-post="/employments/action"
+                    hx-target="#employments-table"
+                    hx-vals='{"method": "Reject", "employment_id": "{{ employment.employment_id }}"}'
+                    onclick="updateFilterHxVals('reject', {{ employment.employment_id }})"
+                    class="btn btn-error">
+                Reject
+            </button>
+            {% when EmploymentState::Accepted %}
+            <button id="finish-{{ employment.employment_id }}"
+                    hx-post="/employments/action"
+                    hx-target="#employments-table"
+                    hx-vals='{"method": "Finish", "employment_id": "{{ employment.employment_id }}"}'
+                    onclick="updateFilterHxVals('finish', {{ employment.employment_id }})"
+                    class="btn btn-info">
+                Finish
+            </button>
+            {% when EmploymentState::Rejected %}
+            <div class="h-12"></div>
+            {% when EmploymentState::Done %}
+                <div class="h-12 flex items-center justify-center">
+                    {% if employment.rating == 0 %}
+                        <div class="rating rating-sm gap-1" id="rating-{{ employment.employment_id }}">
+                            {% for i in 1..=5 %}
+                                <input
+                                    id="rating{{ i }}-{{ employment.employment_id }}"
+                                    type="radio"
+                                    name="rating-{{ employment.employment_id }}"
+                                    class="mask mask-star-2 bg-gray-400 peer/star{{ i }} hover:bg-yellow-400"
+                                    hx-post="/employments/action"
+                                    hx-target="#employments-table"
+                                    hx-confirm="Are you sure you want to rate this employment {{ i }} stars?"
+                                    hx-vals='{"method": "Rating", "employment_id": "{{ employment.employment_id }}", "rating_value": "{{ i }}"}'
+                                    onclick="updateFilterHxVals('rating{{ i }}', {{ employment.employment_id }})"
+                                    data-index="{{ i }}"
+                                    onmouseover="highlightStars(this)"
+                                    onmouseout="resetStars(this)"
+                                    onfocusout="resetIfCancelled('{{ employment.employment_id }}')"
+                                />
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {% call rating_stars::rating_stars(employment.rating) %}
+                    {% endif %}
+                </div>
+            {% endmatch %}
+        </div>
+    </td>
+</tr>
+{% endfor %}
+<script>
+    function highlightStars(currentStar) {
+        const container = currentStar.closest('.rating');
+        const stars = container.querySelectorAll('input');
+        const currentIndex = parseInt(currentStar.dataset.index);
+
+        stars.forEach(star => {
+            const starIndex = parseInt(star.dataset.index);
+            if (starIndex <= currentIndex) {
+                star.classList.remove('bg-gray-400');
+                star.classList.add('bg-yellow-400');
+            } else {
+                star.classList.remove('bg-yellow-400');
+                star.classList.add('bg-gray-400');
+            }
+        });
+    }
+
+    function resetStars(currentStar) {
+        const container = currentStar.closest('.rating');
+        const stars = container.querySelectorAll('input');
+
+        stars.forEach(star => {
+            star.classList.remove('bg-yellow-400');
+            star.classList.add('bg-gray-400');
+        });
+    }
+
+    function resetIfCancelled(employmentId) {
+        const stars = document.querySelectorAll(`#rating-${employmentId} input`);
+        stars.forEach(star => star.checked = false);
+    }
+
+    function updateFilterHxVals(type, employment_id) {
+        let button = document.getElementById(`${type}-${employment_id}`);
+        if (!button) return;
+        let parentVals = JSON.parse(document.getElementById('filter-navbar').getAttribute('hx-vals') || '{}');
+        let buttonVals = JSON.parse(button.getAttribute('hx-vals') || '{}');
+        let updatedVals = JSON.stringify({ ...parentVals, ...buttonVals });
+        button.setAttribute("hx-vals", updatedVals);
+    }
+</script>

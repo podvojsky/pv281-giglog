@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@font-face {
+    font-family: metal-mania;
+    src: url('./fonts/MetalMania-Regular.ttf');
+}
+
+h1 {
+    @apply text-4xl font-bold;
+}

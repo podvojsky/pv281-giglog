@@ -1,0 +1,13 @@
+<div class="flex gap-2">
+    <input
+        name="worked_hours"
+        type="number"
+        value="{{ worked_hours.hours_worked }}"
+        min="0"
+        class="input input-sm input-bordered max-w-[80px]"
+    />
+    <input name="date" type="hidden" value="{{ worked_hours.date }}" />
+    <input name="employment_id" type="hidden" value="{{ worked_hours.employment_id }}" />
+    <input name="worked_hours_id" type="hidden" value="{{ worked_hours.id }}" />
+    <button id="log-hours-btn" class="btn btn-primary btn-sm">Log Hours</button>
+</div>

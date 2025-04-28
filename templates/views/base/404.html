@@ -1,0 +1,16 @@
+{% extends "views/base.html" %}
+
+{% block content %}
+    <div class="flex justify-center pt-[16dvh]">
+        <div class="flex flex-col items-center">
+            <div class="text-[10rem] font-semibold">404</div>
+            <div class="flex flex-col items-center gap-4">
+                <h2 class="text-xl">Unfortunatelly, the page you are looking for was <b>not found</b>.</h2>
+                <div class="flex gap-2">
+                    <a href="/" class="btn btn-primary">Go to home page</a>
+                    <a href="javascript:window.history.back();" class="btn">Go to previous page</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,152 @@
+{% extends "views/base/main.html" %}
+{% import "partials/title.html" as title %}
+
+{% block title %}
+    {% call title::title("Settings - User Details") %}
+{% endblock %}
+
+{% block main_content %}
+    {% match session.user %}
+        {% when Some with (user) %}
+        <div class="py-4">
+            <div class="container mx-auto flex flex-col gap-6">
+                <div class="flex justify-center">
+                    <div class="flex w-full max-w-[500px] flex-col gap-4">
+                        <h1>User Details</h1>
+                        <form
+                            hx-patch="/settings/details"
+                            hx-target="#global-toast"
+                            hx-target-error="#global-toast"
+                            hx-on:htmx:after-request="showGlobalToast(event, false)"
+                            class="flex flex-col gap-4"
+                        >
+                            <div class="flex flex-col gap-2">
+                                <div class="grid grid-cols-2 gap-x-4">
+                                    <label class="form-control w-full">
+                                        <div class="label">
+                                            <span class="label-text">First Name</span>
+                                        </div>
+                                        <input
+                                            id="first-name"
+                                            name="first_name"
+                                            type="text"
+                                            placeholder="Dexter"
+                                            value="{{ user.first_name }}"
+                                            class="input input-bordered w-full"
+                                        />
+                                    </label>
+                                    <label class="form-control w-full">
+                                        <div class="label">
+                                            <span class="label-text">Last Name</span>
+                                        </div>
+                                        <input
+                                            id="last-name"
+                                            name="last_name"
+                                            type="text"
+                                            placeholder="Morgan"
+                                            value="{{ user.last_name }}"
+                                            class="input input-bordered w-full"
+                                        />
+                                    </label>
+                                </div>
+                                <div class="grid grid-cols-2 gap-x-4">
+                                    <label class="form-control w-full">
+                                        <div class="label">
+                                            <span class="label-text">Email</span>
+                                        </div>
+                                        <input
+                                            id="email"
+                                            name="email"
+                                            type="text"
+                                            placeholder="dexter.morgan@mmpd.com"
+                                            value="{{ user.email }}"
+                                            class="input input-bordered w-full"
+                                        />
+                                    </label>
+                                    <label class="form-control w-full">
+                                        <div class="label">
+                                            <span class="label-text">Phone</span>
+                                        </div>
+                                        <input
+                                            id="phone"
+                                            name="phone"
+                                            type="tel"
+                                            placeholder="666777888 or 666 777 888"
+                                            value="{{ user.phone }}"
+                                            class="input input-bordered w-full"
+                                        />
+                                    </label>
+                                </div>
+                                <div class="grid grid-cols-2 gap-x-4">
+                                    <label class="form-control w-full">
+                                        <div class="label">
+                                            <span class="label-text">Gender</span>
+                                        </div>
+                                        <select id="gender" name="gender" class="select select-bordered w-full">
+                                            {% match user.gender %}
+                                                {% when Gender::Male %}
+                                                <option value="Male" selected>Male</option>
+                                                <option value="Female">Female</option>
+                                                <option value="Other">Other</option>
+                                                {% when Gender::Female %}
+                                                <option value="Male">Male</option>
+                                                <option value="Female" selected>Female</option>
+                                                <option value="Other">Other</option>
+                                                {% when Gender::Other %}
+                                                <option value="Male">Male</option>
+                                                <option value="Female">Female</option>
+                                                <option value="Other" selected>Other</option>
+                                            {% endmatch %}
+                                        </select>
+                                    </label>
+                                    <label class="form-control w-full">
+                                        <div class="label">
+                                            <span class="label-text">Birth Date</span>
+                                        </div>
+                                        <input
+                                            id="birth-date"
+                                            name="birth_date"
+                                            class="input input-bordered"
+                                            type="date"
+                                            value="{{ user.birth_date }}"
+                                        />
+                                    </label>
+                                </div>
+                                <label class="form-control w-full">
+                                    <div class="label">
+                                        <span class="label-text">Avatar URL</span>
+                                    </div>
+                                    {% match user.avatar_url %}
+                                        {% when Some with (avatar_url) %}
+                                        <input
+                                            id="avatar-url"
+                                            name="avatar_url"
+                                            type="text"
+                                            placeholder="https://images.cdn.com/image.jpg"
+                                            value="{{ avatar_url }}"
+                                            class="input input-bordered w-full"
+                                        />
+                                        {% when None %}
+                                        <input
+                                            id="avatar-url"
+                                            name="avatar_url"
+                                            type="text"
+                                            placeholder="https://images.cdn.com/image.jpg"
+                                            class="input input-bordered w-full"
+                                        />
+                                    {% endmatch %}
+                                </label>
+                            </div>
+                            <div class="flex flex-col gap-4">
+                                <button class="btn btn-primary">Save changes</button>
+                                <a href="" class="btn">Cancel</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% else %}
+
+    {% endmatch %}
+{% endblock %}

@@ -1,0 +1,64 @@
+<div class="flex justify-center">
+    <div class="max-w-[600px] overflow-x-auto">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Weekday</th>
+                    <th>Hours worked</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for (date, worked_hours) in attendance_log %}
+                    <tr>
+                        <td>{{ date }}</td>
+                        <td>{{ date.weekday() }}</td>
+                        <td>
+                            <form
+                                hx-target-error="#global-toast"
+                                hx-on:htmx:after-request="showGlobalToast(event)"
+                                hx-patch="/partials/base/main/attendance/attendance-log"
+                            >
+                                <div class="flex gap-2">
+                                    {% match worked_hours %}
+                                        {% when Some with (hours) %}
+                                        <input
+                                            name="worked_hours"
+                                            type="number"
+                                            value="{{ hours.hours_worked }}"
+                                            class="input input-sm input-bordered max-w-[80px]"
+                                            min="0"
+                                        />
+                                        <input
+                                            name="employment_id"
+                                            type="hidden"
+                                            value="{{ hours.employment_id }}"
+                                            class=""
+                                        />
+                                        <input name="worked_hours_id" type="hidden" value="{{ hours.id }}" />
+                                        <input name="date" type="hidden" value="{{ date }}" class="" />
+                                        {% when None %}
+                                        <input
+                                            name="worked_hours"
+                                            type="number"
+                                            class="input input-sm input-bordered max-w-[80px]"
+                                            min="0"
+                                        />
+                                        <input name="date" type="hidden" value="{{ date }}" class="" />
+                                        <input
+                                            name="employment_id"
+                                            type="hidden"
+                                            value="{{ employment.id }}"
+                                            class=""
+                                        />
+                                    {% endmatch %}
+                                    <button id="log-hours-btn" class="btn btn-primary btn-sm">Log Hours</button>
+                                </div>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>

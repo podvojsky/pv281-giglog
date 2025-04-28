@@ -1,0 +1,39 @@
+{% extends "views/base/main.html" %}
+{% import "partials/title.html" as title %}
+{% import "partials/event_card.html" as event_card %}
+{% import "partials/events_content.html" as events_content %}
+
+{% block title %}
+    {% call title::title("Events") %}
+{% endblock %}
+
+{% block main_content %}
+    <div class="grid grid-rows-[max-content_1fr]">
+        <div class="navbar sticky top-0 z-[3] border-b border-base-content/10 bg-base-100">
+            <form
+                class="flex gap-4"
+                hx-target="#events-content"
+                hx-get="/partials/base/main/events/events-content"
+                hx-trigger="change from:select, keyup changed delay:500ms from:input"
+                onsubmit="return false;"
+            >
+                <input name="name" class="input input-bordered" type="text" placeholder="Search by event name" />
+                <select name="state" class="select w-full max-w-xs">
+                    <option value="" selected>All States</option>
+                    {% for state in states %}
+                        <option value="{{ state }}">{{ state }}</option>
+                    {% endfor %}
+                </select>
+                <select name="city" class="select w-full max-w-xs">
+                    <option value="" selected>All cities</option>
+                    {% for city in cities %}
+                        <option value="{{ city }}">{{ city }}</option>
+                    {% endfor %}
+                </select>
+            </form>
+        </div>
+        <div id="events-content" class="flex flex-col gap-4 p-4">
+            {% call events_content::events_content(future_events, past_events) %}
+        </div>
+    </div>
+{% endblock %}

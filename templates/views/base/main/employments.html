@@ -1,0 +1,164 @@
+{% extends "views/base/main.html" %}
+{% import "partials/title.html" as title %}
+
+{% block title %}
+{% call title::title("Employments") %}
+{% endblock %}
+
+{% block main_content %}
+
+<div
+    id="filter-navbar"
+    class="navbar sticky top-0 z-[3] flex gap-4 items-center border-b border-base-content/10 bg-base-100 p-4"
+    hx-post="/employments"
+    hx-trigger="change from:select, input from:input, change"
+    hx-target="#employments-table"
+    hx-vals='{"state": "All states", "job_name": "", "event": "", "employee_name": "", "sort_by": "id", "sort_direction": "asc" }'
+>
+
+    <div class="flex flex-col">
+        <label for="event-name" class="label text-sm font-medium text-base-content">Event</label>
+        <input
+            id="event-name"
+            type="text"
+            class="input input-bordered w-48"
+            placeholder="Enter event name"
+            oninput="updateEmploymentsFilters(this, 'event')"
+        >
+    </div>
+
+    <div class="flex flex-col">
+        <label for="job-name" class="label text-sm font-medium text-base-content">Job Name</label>
+        <input
+            id="job-name"
+            type="text"
+            class="input input-bordered w-48"
+            placeholder="Enter job name"
+            oninput="updateEmploymentsFilters(this, 'job_name')"
+        >
+    </div>
+
+    <div class="flex flex-col">
+        <label for="employee-name" class="label text-sm font-medium text-base-content">Employee Name</label>
+        <input
+            id="employee-name"
+            type="text"
+            class="input input-bordered w-48"
+            placeholder="Enter employee name"
+            oninput="updateEmploymentsFilters(this, 'employee_name')"
+        >
+    </div>
+
+    <div class="flex flex-col">
+        <label for="state-select" class="label text-sm font-medium text-base-content">State</label>
+        <select
+            id="state-select"
+            class="select select-bordered w-48"
+            onchange="updateEmploymentsFilters(this, 'state')"
+        >
+            <option value="All states">All states</option>
+            {% for state in employment_states %}
+            <option value="{{ state }}">{{ state }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+</div>
+
+<div class="overflow-x-auto">
+    <table class="table">
+        <thead>
+        <tr>
+            <th onclick="sortEmploymentsTable('event')" class="cursor-pointer px-4 py-2 text-left">
+                <div class="flex items-center space-x-2">
+                    Event <i data-lucide="chevron-up" class="sort-icon" data-column="event"></i>
+                </div>
+            </th>
+            <th onclick="sortEmploymentsTable('job_name')" class="cursor-pointer px-4 py-2 text-left">
+                <div class="flex items-center space-x-2">
+                    Job Name <i data-lucide="chevron-up" class="sort-icon" data-column="job_name"></i>
+                </div>
+            </th>
+            <th onclick="sortEmploymentsTable('capacity')" class="cursor-pointer px-4 py-2 text-left">
+                <div class="flex items-center space-x-2">
+                    Capacity <i data-lucide="chevron-up" class="sort-icon" data-column="capacity"></i>
+                </div>
+            </th>
+            <th onclick="sortEmploymentsTable('employee_name')" class="cursor-pointer px-4 py-2 text-left">
+                <div class="flex items-center space-x-2">
+                    Employee <i data-lucide="chevron-up" class="sort-icon" data-column="employee_name"></i>
+                </div>
+            </th>
+            <th onclick="sortEmploymentsTable('state')" class="cursor-pointer px-4 py-2 text-left">
+                <div class="flex items-center space-x-2">
+                    State <i data-lucide="chevron-up" class="sort-icon" data-column="state"></i>
+                </div>
+            </th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody id="employments-table">
+            {% include "employments_table_body.html" %}
+        </tbody>
+    </table>
+</div>
+
+<script>
+    document.addEventListener("htmx:afterSettle", function() {
+        lucide.createIcons();
+    });
+
+    (function () {
+        const filters = {
+            state: "All states",
+            job_name: "",
+            event: "",
+            employee_name: "",
+            sort_by: "id",
+            sort_direction: "asc"
+        };
+
+        function updateFilters(element, key) {
+            filters[key] = element.value;
+            sendFilters();
+        }
+
+        function sortTable(column) {
+
+            if (filters.sort_by === column) {
+                filters.sort_direction = filters.sort_direction === "asc" ? "desc" : "asc";
+            } else {
+                filters.sort_by = column;
+                filters.sort_direction = "asc";
+            }
+
+            updateSortIcons();
+            sendFilters();
+        }
+
+        function updateSortIcons() {
+            document.querySelectorAll(".sort-icon").forEach(icon => {
+                icon.setAttribute("data-lucide", "chevron-up"); // Reset all icons to chevron-up
+            });
+
+            document.querySelectorAll(".sort-icon").forEach(icon => {
+                if (icon.dataset.column === filters.sort_by) {
+                    icon.setAttribute("data-lucide", filters.sort_direction === "asc" ? "chevron-up" : "chevron-down");
+                }
+            });
+
+            lucide.createIcons();
+        }
+
+        function sendFilters() {
+            const navbar = document.querySelector('#filter-navbar');
+            navbar.setAttribute('hx-vals', JSON.stringify(filters));
+            navbar.dispatchEvent(new Event('change', { bubbles: true }));
+        }
+
+        window.updateEmploymentsFilters = updateFilters;
+        window.sortEmploymentsTable = sortTable;
+    })();
+</script>
+
+{% endblock %}

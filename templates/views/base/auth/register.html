@@ -1,0 +1,125 @@
+{% extends "views/base/auth.html" %}
+{% import "partials/title.html" as title %}
+
+{% block title %}
+    {% call title::title("Register") %}
+{% endblock %}
+
+{% block form %}
+    <form
+        hx-post="/register"
+        hx-target-error="#global-toast"
+        hx-on:htmx:after-request="showGlobalToast(event)"
+        class="flex w-full items-center justify-center"
+    >
+        <div class="flex w-full max-w-xs flex-col gap-4">
+            <div class="flex max-h-[320px] flex-col gap-2 overflow-y-auto">
+                <label class="form-control w-full max-w-xs">
+                    <div class="label">
+                        <span class="label-text">First Name</span>
+                    </div>
+                    <input
+                        id="first-name"
+                        name="first_name"
+                        type="text"
+                        placeholder="Dexter"
+                        class="input input-bordered w-full max-w-xs"
+                    />
+                </label>
+                <label class="form-control w-full max-w-xs">
+                    <div class="label">
+                        <span class="label-text">Last Name</span>
+                    </div>
+                    <input
+                        id="last-name"
+                        name="last_name"
+                        type="text"
+                        placeholder="Morgan"
+                        class="input input-bordered w-full max-w-xs"
+                    />
+                </label>
+                <label class="form-control w-full max-w-xs">
+                    <div class="label">
+                        <span class="label-text">Username</span>
+                    </div>
+                    <input
+                        id="username"
+                        name="username"
+                        type="text"
+                        placeholder="dex"
+                        class="input input-bordered w-full max-w-xs"
+                    />
+                </label>
+                <label class="form-control w-full max-w-xs">
+                    <div class="label">
+                        <span class="label-text">Email</span>
+                    </div>
+                    <input
+                        id="email"
+                        name="email"
+                        type="text"
+                        placeholder="dexter.morgan@mmpd.com"
+                        class="input input-bordered w-full max-w-xs"
+                    />
+                </label>
+                <label class="form-control w-full max-w-xs">
+                    <div class="label">
+                        <span class="label-text">Phone</span>
+                    </div>
+                    <input
+                        id="phone"
+                        name="phone"
+                        type="tel"
+                        placeholder="666777888 or 666 777 888"
+                        class="input input-bordered w-full max-w-xs"
+                    />
+                </label>
+                <label class="form-control w-full max-w-xs">
+                    <div class="label">
+                        <span class="label-text">Gender</span>
+                    </div>
+                    <select id="gender" name="gender" class="select select-bordered w-full max-w-xs">
+                        <option value="Male" selected>Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </label>
+                <label class="form-control w-full max-w-xs">
+                    <div class="label">
+                        <span class="label-text">Birth Date</span>
+                    </div>
+                    <input id="birth-date" name="birth_date" class="input input-bordered" type="date" />
+                </label>
+                <label class="form-control w-full max-w-xs">
+                    <div class="label">
+                        <span class="label-text">Password</span>
+                    </div>
+                    <input
+                        id="password"
+                        name="password"
+                        type="password"
+                        placeholder="********"
+                        class="input input-bordered w-full max-w-xs"
+                    />
+                </label>
+                <label class="form-control w-full max-w-xs">
+                    <div class="label">
+                        <span class="label-text">Confirm Password</span>
+                    </div>
+                    <input
+                        id="password-confirm"
+                        name="password_confirm"
+                        type="password"
+                        placeholder="********"
+                        class="input input-bordered w-full max-w-xs"
+                    />
+                </label>
+            </div>
+            <div class="flex flex-col">
+                <button class="btn btn-neutral">Create new account</button>
+                <div class="divider my-3">Or</div>
+                <a href="/login" class="btn btn-outline">Log in</a>
+            </div>
+        </div>
+    </form>
+{% endblock form %}

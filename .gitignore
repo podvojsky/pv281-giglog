@@ -1,0 +1,10 @@
+/target
+/node_modules
+/public/styles.css
+*.tar
+.env*
+!.env.template
+.sqlx
+.idea
+*.session.sql
+.vscode
