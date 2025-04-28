@@ -119,4 +119,4 @@ There are two ways how to make a production build. First one is to generate a do
 
 5. The application should be running on `http://localhost:[ENV_PORT]`.
 
-test deploy
+test deploy 2
