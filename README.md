@@ -118,3 +118,5 @@ There are two ways how to make a production build. First one is to generate a do
 4. Run the executable `./pv281-giglog` or `pv281-giglog.exe` if you are on Windows.
 
 5. The application should be running on `http://localhost:[ENV_PORT]`.
+
+test deploy 2
